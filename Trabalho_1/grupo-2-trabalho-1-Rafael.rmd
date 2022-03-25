@@ -4,9 +4,6 @@ subtitle: 'Unidade Curricular : Métodos Estatísticos'
 output: html_document
 ---
 
-First test
-Second Test
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -145,7 +142,6 @@ bikes.not_rent <- subset(bikes, cnt==1)
 
 # Ver tabelas importadas no RStudio
 View(bikes)
-View(bikes.not_rent)
 ```
 
 
@@ -261,6 +257,107 @@ Verificou-se que não existem outliers presentes no gráfico.
 ### Gráfico de Barras {#temp-barras}
 ```{r, evail = T}
 barplot(bikes$temp, main = "Gráfico de Barras da Temperatura", ylab = "Frequencia")
+```
+
+
+## **2.. weekday** {#weekday}
+
+### Classificação da variável
+
+Variável Quantitativa Discreta, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#weekday-mtc}
+
+#### Moda {#weekday-moda}
+```{r, evail = T}
+bikes.weekday.moda <- moda(bikes$weekday)
+bikes.weekday.moda
+```
+
+#### Média {#weekday-media}
+```{r, evail = T}
+bikes.weekday.media <- mean(bikes$weekday)
+bikes.weekday.media
+```
+
+#### Mediana {#weekday-mediana}
+```{r, evail = T}
+bikes.weekday.mediana <- median(bikes$weekday)
+bikes.weekday.mediana
+```
+
+#### Quartil {#weekday-quartil}
+```{r, evail = T}
+bikes.weekday.quantile <- quantile(bikes$weekday)
+bikes.weekday.quantile
+```
+
+### Medidas de Dispersão Central {#weekday-mdc}
+
+#### Variância {#weekday-variancia}
+```{r, evail = T}
+bikes.weekday.variancia <- var(bikes$weekday)
+bikes.weekday.variancia
+```
+
+#### Desvio Padrão {#weekday-desvio}
+```{r, evail = T}
+bikes.weekday.desvio_padrao <- sd(bikes$weekday)
+bikes.weekday.desvio_padrao
+```
+
+#### Coeficiente de Variação {#weekday-cv}
+```{r, evail = T}
+bikes.weekday.coeficiente_variacao <- coeficiente_variacao(bikes$weekday)
+bikes.weekday.coeficiente_variacao
+```
+
+### Valores Extremos {#weekday-extremos}
+
+#### Máximo {#weekday-max}
+```{r, evail = T}
+bikes.weekday.maxima <- max(bikes$weekday)
+bikes.weekday.maxima
+```
+
+#### Mínimo {#weekday-min}
+```{r, evail = T}
+bikes.weekday.minima <- min(bikes$weekday)
+bikes.weekday.minima
+```
+
+### Medidas de Assimetria {#weekday-assimetria}
+```{r, evail = T}
+bikes.weekday.assimetria <- assimetria(bikes$weekday)
+bikes.weekday.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#weekday-curtose}
+```{r, evail = T}
+bikes.weekday.achatamento <- achatamento(bikes$weekday)
+bikes.weekday.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Diagrama de Extremos e Quartis {#weekday-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.weekday.outliers <- boxplot.stats(bikes$weekday)$out
+bikes.weekday.outliers
+
+# Diagrama
+boxplot(bikes$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
+
+mtext(text = paste("outliers: ", paste(bikes.weekday.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
+### Gráfico de Barras {#weekday-barras}
+```{r, evail = T}
+barplot(bikes$weekday, main = "Gráfico de Barras da Dia da Semana", ylab = "Frequencia")
 ```
 
 
