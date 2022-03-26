@@ -134,11 +134,11 @@ bikes.dataset <- "D:/LEI/matematica/Metodos_Estatisticos/2122/ME_Trabalhos_2122/
 # regiao Bejaia, nordeste da bikes 
 bikes <- read.csv(file = bikes.dataset)
 
-# Classes is fire
-bikes.rent <- subset(bikes, cnt>1)
+# Classes is between 1 to 488
+bikes.rentless <- subset(bikes, cnt<=488)
 
-# Classes is not fire
-bikes.not_rent <- subset(bikes, cnt==1)
+# Classes is between 488 to 977
+bikes.rentmore <- subset(bikes, 488<cnt)
 
 # Ver tabelas importadas no RStudio
 View(bikes)
@@ -264,7 +264,7 @@ barplot(bikes$temp, main = "Gráfico de Barras da Temperatura", ylab = "Frequenc
 
 ### Classificação da variável
 
-Variável Quantitativa Discreta, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
 
 ### Medidas de Tendência Central {#weekday-mtc}
 
@@ -358,6 +358,207 @@ Verificou-se que não existem outliers presentes no gráfico.
 ### Gráfico de Barras {#weekday-barras}
 ```{r, evail = T}
 barplot(bikes$weekday, main = "Gráfico de Barras da Dia da Semana", ylab = "Frequencia")
+```
+
+
+## **3.. casual** {#casual}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#casual-mtc}
+
+#### Moda {#casual-moda}
+```{r, evail = T}
+bikes.casual.moda <- moda(bikes$casual)
+bikes.casual.moda
+```
+
+#### Média {#casual-media}
+```{r, evail = T}
+bikes.casual.media <- mean(bikes$casual)
+bikes.casual.media
+```
+
+#### Mediana {#casual-mediana}
+```{r, evail = T}
+bikes.casual.mediana <- median(bikes$casual)
+bikes.casual.mediana
+```
+
+#### Quartil {#casual-quartil}
+```{r, evail = T}
+bikes.casual.quantile <- quantile(bikes$casual)
+bikes.casual.quantile
+```
+
+### Medidas de Dispersão Central {#casual-mdc}
+
+#### Variância {#casual-variancia}
+```{r, evail = T}
+bikes.casual.variancia <- var(bikes$casual)
+bikes.casual.variancia
+```
+
+#### Desvio Padrão {#casual-desvio}
+```{r, evail = T}
+bikes.casual.desvio_padrao <- sd(bikes$casual)
+bikes.casual.desvio_padrao
+```
+
+#### Coeficiente de Variação {#casual-cv}
+```{r, evail = T}
+bikes.casual.coeficiente_variacao <- coeficiente_variacao(bikes$casual)
+bikes.casual.coeficiente_variacao
+```
+
+### Valores Extremos {#casual-extremos}
+
+#### Máximo {#casual-max}
+```{r, evail = T}
+bikes.casual.maxima <- max(bikes$casual)
+bikes.casual.maxima
+```
+
+#### Mínimo {#casual-min}
+```{r, evail = T}
+bikes.casual.minima <- min(bikes$casual)
+bikes.casual.minima
+```
+
+### Medidas de Assimetria {#casual-assimetria}
+```{r, evail = T}
+bikes.casual.assimetria <- assimetria(bikes$casual)
+bikes.casual.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#casual-curtose}
+```{r, evail = T}
+bikes.casual.achatamento <- achatamento(bikes$casual)
+bikes.casual.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Diagrama de Extremos e Quartis {#casual-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.casual.outliers <- boxplot.stats(bikes$casual)$out
+bikes.casual.outliers
+
+# Diagrama
+boxplot(bikes$casual, ylab="Casual", main="Boxplot Casual")
+
+mtext(text = paste("outliers: ", paste(bikes.casual.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
+### Gráfico de Barras {#casual-barras}
+```{r, evail = T}
+barplot(bikes$casual, main = "Gráfico de Barras da Casual", ylab = "Frequencia")
+```
+
+## **4.. atemp** {#atemp}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#atemp-mtc}
+
+#### Moda {#atemp-moda}
+```{r, evail = T}
+bikes.atemp.moda <- moda(bikes$atemp)
+bikes.atemp.moda
+```
+
+#### Média {#atemp-media}
+```{r, evail = T}
+bikes.atemp.media <- mean(bikes$atemp)
+bikes.atemp.media
+```
+
+#### Mediana {#atemp-mediana}
+```{r, evail = T}
+bikes.atemp.mediana <- median(bikes$atemp)
+bikes.atemp.mediana
+```
+
+#### Quartil {#atemp-quartil}
+```{r, evail = T}
+bikes.atemp.quantile <- quantile(bikes$atemp)
+bikes.atemp.quantile
+```
+
+### Medidas de Dispersão Central {#atemp-mdc}
+
+#### Variância {#atemp-variancia}
+```{r, evail = T}
+bikes.atemp.variancia <- var(bikes$atemp)
+bikes.atemp.variancia
+```
+
+#### Desvio Padrão {#atemp-desvio}
+```{r, evail = T}
+bikes.atemp.desvio_padrao <- sd(bikes$atemp)
+bikes.atemp.desvio_padrao
+```
+
+#### Coeficiente de Variação {#atemp-cv}
+```{r, evail = T}
+bikes.atemp.coeficiente_variacao <- coeficiente_variacao(bikes$atemp)
+bikes.atemp.coeficiente_variacao
+```
+
+### Valores Extremos {#atemp-extremos}
+
+#### Máximo {#atemp-max}
+```{r, evail = T}
+bikes.atemp.maxima <- max(bikes$atemp)
+bikes.atemp.maxima
+```
+
+#### Mínimo {#atemp-min}
+```{r, evail = T}
+bikes.atemp.minima <- min(bikes$atemp)
+bikes.atemp.minima
+```
+
+### Medidas de Assimetria {#atemp-assimetria}
+```{r, evail = T}
+bikes.atemp.assimetria <- assimetria(bikes$atemp)
+bikes.atemp.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#atemp-curtose}
+```{r, evail = T}
+bikes.atemp.achatamento <- achatamento(bikes$atemp)
+bikes.atemp.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Diagrama de Extremos e Quartis {#atemp-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.atemp.outliers <- boxplot.stats(bikes$atemp)$out
+bikes.atemp.outliers
+
+# Diagrama
+boxplot(bikes$atemp, ylab="atemp", main="Boxplot atemp")
+
+mtext(text = paste("outliers: ", paste(bikes.atemp.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
+### Gráfico de Barras {#atemp-barras}
+```{r, evail = T}
+barplot(bikes$atemp, main = "Gráfico de Barras da atemp", ylab = "Frequencia")
 ```
 
 
