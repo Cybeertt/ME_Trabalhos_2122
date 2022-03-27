@@ -168,10 +168,26 @@ Variável Quantitativa Discreta, e é tratada como quantitativa discreta normal,
 
 ### Medidas de Tendência Central {#temp-mtc}
 
+```{r, eval=TRUE}
+# tabela de valores
+prop.table(bikes$temp)
+```
+
+```{r, eval=TRUE}
+# Contagem de valores
+table(bikes$temp)
+```
+
+```{r, eval=TRUE}
+
+```
+
 #### Moda {#temp-moda}
 ```{r, evail = T}
-bikes.temperatura.moda <- moda(bikes$temp)
-bikes.temperatura.moda
+bikes.temp.sort <- sort(bikes$temp)
+
+bikes.temp.mode <- moda(bikes.temp.sort)
+bikes.temp.mode
 ```
 
 #### Média {#temp-media}
@@ -239,6 +255,32 @@ bikes.temperatura.achatamento <- achatamento(bikes$temp)
 bikes.temperatura.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#ffmc-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.temp.sturges.nclass <- sturges(bikes$temp)
+bikes.temp.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.temp.sturges.amplitude <- amplitude(bikes$temp)
+bikes.temp.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.temp.sturges.breaks <- seq(bikes.temperatura.minima, bikes.temperatura.maxima, bikes.temp.sturges.amplitude)
+bikes.temp.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$temp, breaks=bikes.temp.sturges.breaks))
+
+# histograma
+hist(bikes$temp, main="Histograma FFMC", xlab="FFMC",  ylab="Indice", nclass=bikes.temp.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 28.6, a 81.90,  tendo um comportamento crescente até atingir o maior índice no intervalo de  81.5 a 90.3.
 
 ### Diagrama de Extremos e Quartis {#temp-extremo-quartil}
 ```{r, evail = T}
