@@ -131,14 +131,14 @@ outliers_type_severo <- function(x, os)
 # importar dataset
 bikes.dataset <- "D:/LEI/matematica/Metodos_Estatisticos/2122/ME_Trabalhos_2122/hour.csv"
 
-# regiao Bejaia, nordeste da bikes 
+# Todos os alugueres todas as horas
 bikes <- read.csv(file = bikes.dataset)
 
-# Classes is between 1 to 488
-bikes.rentless <- subset(bikes, cnt<=488)
+# Todos os alugueres entre as 7 às 18
+bikes.day <- subset(bikes, 6<hr & hr<19)
 
-# Classes is between 488 to 977
-bikes.rentmore <- subset(bikes, 488<cnt)
+# Todos os alugueres entre as 19 às 6
+bikes.night <- subset(bikes, hr>18 | hr<7)
 
 # Ver tabelas importadas no RStudio
 View(bikes)
@@ -148,7 +148,7 @@ View(bikes)
 ```{r, evail = TRUE}
 # tabela frequencia
 local({
-  .Table <- with(bikes, table(cnt))
+  .Table <- with(bikes, table(hr))
   cat("\ncounts:\n")
   print(.Table)
   cat("\npercentages:\n")
@@ -178,9 +178,6 @@ prop.table(bikes$temp)
 table(bikes$temp)
 ```
 
-```{r, eval=TRUE}
-
-```
 
 #### Moda {#temp-moda}
 ```{r, evail = T}
@@ -247,7 +244,7 @@ bikes.temperatura.minima
 bikes.temperatura.assimetria <- assimetria(bikes$temp)
 bikes.temperatura.assimetria
 ```
-De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+De acordo com o resultado, é assimétrica negativa fraca (ou enviesada para a esquerda).
 
 ### Medidas de Curtose ou Achatamento {#temp-curtose}
 ```{r, evail = T}
@@ -256,7 +253,7 @@ bikes.temperatura.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
 
-### Histograma {#ffmc-hist}
+### Histograma {#temp-hist}
 ```{r, eval=TRUE}
 # formula de sturges
 cat("Número de classes\n")
@@ -277,7 +274,7 @@ cat("\nTabela de frequências\n")
 table(cut(bikes$temp, breaks=bikes.temp.sturges.breaks))
 
 # histograma
-hist(bikes$temp, main="Histograma FFMC", xlab="FFMC",  ylab="Indice", nclass=bikes.temp.sturges.nclass)
+hist(bikes$temp, main="Histograma Temperature", xlab="Temperature",  ylab="Indice", nclass=bikes.temp.sturges.nclass)
 ```
 
 A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 28.6, a 81.90,  tendo um comportamento crescente até atingir o maior índice no intervalo de  81.5 a 90.3.
@@ -295,11 +292,6 @@ boxplot(bikes$temp, ylab="Temperatura", main="Boxplot Temperatura")
 mtext(text = paste("outliers: ", paste(bikes.temperatura.outliers, collapse = ", ")), side = 1)
 ```
 Verificou-se que não existem outliers presentes no gráfico.
-
-### Gráfico de Barras {#temp-barras}
-```{r, evail = T}
-barplot(bikes$temp, main = "Gráfico de Barras da Temperatura", ylab = "Frequencia")
-```
 
 
 ## **2.. weekday** {#weekday}
@@ -381,6 +373,30 @@ bikes.weekday.achatamento <- achatamento(bikes$weekday)
 bikes.weekday.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#weekday-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.weekday.sturges.nclass <- sturges(bikes$weekday)
+bikes.weekday.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.weekday.sturges.amplitude <- amplitude(bikes$weekday)
+bikes.weekday.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.weekday.sturges.breaks <- seq(bikes.weekday.minima, bikes.weekday.maxima, bikes.weekday.sturges.amplitude)
+bikes.weekday.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$weekday, breaks=bikes.weekday.sturges.breaks))
+
+# histograma
+hist(bikes$weekday, main="Histograma Weekday", xlab="Weekday",  ylab="Indice", nclass=bikes.weekday.sturges.nclass)
+```
 
 ### Diagrama de Extremos e Quartis {#weekday-extremo-quartil}
 ```{r, evail = T}
@@ -583,6 +599,30 @@ bikes.atemp.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
 
+### Histograma {#atemp-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.atemp.sturges.nclass <- sturges(bikes$atemp)
+bikes.atemp.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.atemp.sturges.amplitude <- amplitude(bikes$atemp)
+bikes.atemp.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.atemp.sturges.breaks <- seq(bikes.atemp.minima, bikes.atemp.maxima, bikes.atemp.sturges.amplitude)
+bikes.atemp.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$atemp, breaks=bikes.atemp.sturges.breaks))
+
+# histograma
+hist(bikes$atemp, main="Histograma atemp", xlab="atemp",  ylab="Indice", nclass=bikes.atemp.sturges.nclass)
+```
+
 ### Diagrama de Extremos e Quartis {#atemp-extremo-quartil}
 ```{r, evail = T}
 # Outliers
@@ -603,6 +643,130 @@ Verificou-se que não existem outliers presentes no gráfico.
 barplot(bikes$atemp, main = "Gráfico de Barras da atemp", ylab = "Frequencia")
 ```
 
+
+## **5.. cnt** {#cnt}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#cnt-mtc}
+
+#### Moda {#cnt-moda}
+```{r, evail = T}
+bikes.cnt.moda <- moda(bikes$cnt)
+bikes.cnt.moda
+```
+
+#### Média {#cnt-media}
+```{r, evail = T}
+bikes.cnt.media <- mean(bikes$cnt)
+bikes.cnt.media
+```
+
+#### Mediana {#cnt-mediana}
+```{r, evail = T}
+bikes.cnt.mediana <- median(bikes$cnt)
+bikes.cnt.mediana
+```
+
+#### Quartil {#cnt-quartil}
+```{r, evail = T}
+bikes.cnt.quantile <- quantile(bikes$cnt)
+bikes.cnt.quantile
+```
+
+### Medidas de Dispersão Central {#cnt-mdc}
+
+#### Variância {#cnt-variancia}
+```{r, evail = T}
+bikes.cnt.variancia <- var(bikes$cnt)
+bikes.cnt.variancia
+```
+
+#### Desvio Padrão {#cnt-desvio}
+```{r, evail = T}
+bikes.cnt.desvio_padrao <- sd(bikes$cnt)
+bikes.cnt.desvio_padrao
+```
+
+#### Coeficiente de Variação {#cnt-cv}
+```{r, evail = T}
+bikes.cnt.coeficiente_variacao <- coeficiente_variacao(bikes$cnt)
+bikes.cnt.coeficiente_variacao
+```
+
+### Valores Extremos {#cnt-extremos}
+
+#### Máximo {#cnt-max}
+```{r, evail = T}
+bikes.cnt.maxima <- max(bikes$cnt)
+bikes.cnt.maxima
+```
+
+#### Mínimo {#cnt-min}
+```{r, evail = T}
+bikes.cnt.minima <- min(bikes$cnt)
+bikes.cnt.minima
+```
+
+### Medidas de Assimetria {#cnt-assimetria}
+```{r, evail = T}
+bikes.cnt.assimetria <- assimetria(bikes$cnt)
+bikes.cnt.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#cnt-curtose}
+```{r, evail = T}
+bikes.cnt.achatamento <- achatamento(bikes$cnt)
+bikes.cnt.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#cnt-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.cnt.sturges.nclass <- sturges(bikes$cnt)
+bikes.cnt.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.cnt.sturges.amplitude <- amplitude(bikes$cnt)
+bikes.cnt.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.cnt.sturges.breaks <- seq(bikes.cnt.minima, bikes.cnt.maxima, bikes.cnt.sturges.amplitude)
+bikes.cnt.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$cnt, breaks=bikes.cnt.sturges.breaks))
+
+# histograma
+hist(bikes$cnt, main="Histograma cnt", xlab="cnt",  ylab="Indice", nclass=bikes.cnt.sturges.nclass)
+```
+
+### Diagrama de Extremos e Quartis {#cnt-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.cnt.outliers <- boxplot.stats(bikes$cnt)$out
+bikes.cnt.outliers
+
+# Diagrama
+boxplot(bikes$cnt, ylab="cnt", main="Boxplot cnt")
+
+mtext(text = paste("outliers: ", paste(bikes.cnt.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
+### Gráfico de Barras {#cnt-barras}
+```{r, evail = T}
+barplot(bikes$cnt, main = "Gráfico de Barras da cnt", ylab = "Frequencia")
+```
 
 ## Including Plots
 
