@@ -160,7 +160,7 @@ local({
 # quartis
 summary(bikes)
 ```
-## **2.1. temp** {#temp}
+## **1. temp** {#temp}
 
 ### Classificação da variável
 
@@ -644,7 +644,124 @@ barplot(bikes$atemp, main = "Gráfico de Barras da atemp", ylab = "Frequencia")
 ```
 
 
-## **5.. cnt** {#cnt}
+## **5.. hum** {#hum}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#hum-mtc}
+
+#### Moda {#hum-moda}
+```{r, evail = T}
+bikes.hum.moda <- moda(bikes$hum)
+bikes.hum.moda
+```
+
+#### Média {#hum-media}
+```{r, evail = T}
+bikes.hum.media <- mean(bikes$hum)
+bikes.hum.media
+```
+
+#### Mediana {#hum-mediana}
+```{r, evail = T}
+bikes.hum.mediana <- median(bikes$hum)
+bikes.hum.mediana
+```
+
+#### Quartil {#hum-quartil}
+```{r, evail = T}
+bikes.hum.quantile <- quantile(bikes$hum)
+bikes.hum.quantile
+```
+
+### Medidas de Dispersão Central {#hum-mdc}
+
+#### Variância {#hum-variancia}
+```{r, evail = T}
+bikes.hum.variancia <- var(bikes$hum)
+bikes.hum.variancia
+```
+
+#### Desvio Padrão {#hum-desvio}
+```{r, evail = T}
+bikes.hum.desvio_padrao <- sd(bikes$hum)
+bikes.hum.desvio_padrao
+```
+
+#### Coeficiente de Variação {#hum-cv}
+```{r, evail = T}
+bikes.hum.coeficiente_variacao <- coeficiente_variacao(bikes$hum)
+bikes.hum.coeficiente_variacao
+```
+
+### Valores Extremos {#hum-extremos}
+
+#### Máximo {#hum-max}
+```{r, evail = T}
+bikes.hum.maxima <- max(bikes$hum)
+bikes.hum.maxima
+```
+
+#### Mínimo {#hum-min}
+```{r, evail = T}
+bikes.hum.minima <- min(bikes$hum)
+bikes.hum.minima
+```
+
+### Medidas de Assimetria {#hum-assimetria}
+```{r, evail = T}
+bikes.hum.assimetria <- assimetria(bikes$hum)
+bikes.hum.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#hum-curtose}
+```{r, evail = T}
+bikes.hum.achatamento <- achatamento(bikes$hum)
+bikes.hum.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#hum-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.hum.sturges.nclass <- sturges(bikes$hum)
+bikes.hum.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.hum.sturges.amplitude <- amplitude(bikes$hum)
+bikes.hum.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.hum.sturges.breaks <- seq(bikes.hum.minima, bikes.hum.maxima, bikes.hum.sturges.amplitude)
+bikes.hum.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$hum, breaks=bikes.hum.sturges.breaks))
+
+# histograma
+hist(bikes$hum, main="Histograma hum", xlab="hum",  ylab="Indice", nclass=bikes.hum.sturges.nclass)
+```
+
+### Diagrama de Extremos e Quartis {#hum-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.hum.outliers <- boxplot.stats(bikes$hum)$out
+bikes.hum.outliers
+
+# Diagrama
+boxplot(bikes$hum, ylab="hum", main="Boxplot hum")
+
+mtext(text = paste("outliers: ", paste(bikes.hum.outliers, collapse = ", ")), side = 1)
+```
+
+## **6.. cnt** {#cnt}
 
 ### Classificação da variável
 
@@ -762,11 +879,6 @@ mtext(text = paste("outliers: ", paste(bikes.cnt.outliers, collapse = ", ")), si
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
-
-### Gráfico de Barras {#cnt-barras}
-```{r, evail = T}
-barplot(bikes$cnt, main = "Gráfico de Barras da cnt", ylab = "Frequencia")
-```
 
 ## Including Plots
 
