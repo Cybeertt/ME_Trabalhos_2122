@@ -495,21 +495,6 @@ bikes.casual.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
 
-### Diagrama de Extremos e Quartis {#casual-extremo-quartil}
-```{r, evail = T}
-# Outliers
-cat("\nOutliers\n")
-bikes.casual.outliers <- boxplot.stats(bikes$casual)$out
-bikes.casual.outliers
-
-# Diagrama
-boxplot(bikes$casual, ylab="Casual", main="Boxplot Casual")
-
-mtext(text = paste("outliers: ", paste(bikes.casual.outliers, collapse = ", ")), side = 1)
-```
-
-Verificou-se que não existem outliers presentes no gráfico.
-
 ### Histograma {#casual-hist}
 ```{r, eval=TRUE}
 # formula de sturges
@@ -534,7 +519,24 @@ table(cut(bikes$casual, breaks=bikes.casual.sturges.breaks))
 hist(bikes$casual, main="Histograma casual", xlab="casual",  ylab="Indice", nclass=bikes.casual.sturges.nclass)
 ```
 
-A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 367,  tendo um comportamento crescente até atingir o maior índice no intervalo de  0 a 24.5.
+A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 367,  tendo um comportamento decrescente até atingir o maior índice no intervalo de  0 a 24.5.
+
+
+### Diagrama de Extremos e Quartis {#casual-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+bikes.casual.outliers <- boxplot.stats(bikes$casual)$out
+bikes.casual.outliers
+
+# Diagrama
+boxplot(bikes$casual, ylab="Casual", main="Boxplot Casual")
+
+mtext(text = paste("outliers: ", paste(bikes.casual.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
 
 ## **4.. atemp** {#atemp}
 
@@ -616,6 +618,7 @@ bikes.atemp.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
 
+
 ### Histograma {#atemp-hist}
 ```{r, eval=TRUE}
 # formula de sturges
@@ -640,6 +643,9 @@ table(cut(bikes$atemp, breaks=bikes.atemp.sturges.breaks))
 hist(bikes$atemp, main="Histograma atemp", xlab="atemp",  ylab="Indice", nclass=bikes.atemp.sturges.nclass)
 ```
 
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0 a 0.5337 e diminui no intervalo 0.5337 a 1,  tendo um comportamento crescente e decrescente até atingir o maior índice no intervalo de 0.467 a 0.533.
+
+
 ### Diagrama de Extremos e Quartis {#atemp-extremo-quartil}
 ```{r, evail = T}
 # Outliers
@@ -654,11 +660,6 @@ mtext(text = paste("outliers: ", paste(bikes.atemp.outliers, collapse = ", ")), 
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
-
-### Gráfico de Barras {#atemp-barras}
-```{r, evail = T}
-barplot(bikes$atemp, main = "Gráfico de Barras da atemp", ylab = "Frequencia")
-```
 
 
 ## **5.. hum** {#hum}
@@ -765,6 +766,9 @@ table(cut(bikes$hum, breaks=bikes.hum.sturges.breaks))
 hist(bikes$hum, main="Histograma hum", xlab="hum",  ylab="Indice", nclass=bikes.hum.sturges.nclass)
 ```
 
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0 a 0.6 e diminui no intervalo 0.6 a 1,  tendo um comportamento crescente e decrescente até atingir o maior índice no intervalo de 0.533 a 0.6.
+
+
 ### Diagrama de Extremos e Quartis {#hum-extremo-quartil}
 ```{r, evail = T}
 # Outliers
@@ -777,6 +781,8 @@ boxplot(bikes$hum, ylab="hum", main="Boxplot hum")
 
 mtext(text = paste("outliers: ", paste(bikes.hum.outliers, collapse = ", ")), side = 1)
 ```
+
+Verificou-se que existem outliers presentes no gráfico no ponto 0.
 
 ## **6.. cnt** {#cnt}
 
@@ -882,6 +888,8 @@ table(cut(bikes$cnt, breaks=bikes.cnt.sturges.breaks))
 hist(bikes$cnt, main="Histograma cnt", xlab="cnt",  ylab="Indice", nclass=bikes.cnt.sturges.nclass)
 ```
 
+A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 977,  tendo um comportamento decrescente até atingir o maior índice no intervalo de  1 a 66.1.
+
 ### Diagrama de Extremos e Quartis {#cnt-extremo-quartil}
 ```{r, evail = T}
 # Outliers
@@ -895,7 +903,7 @@ boxplot(bikes$cnt, ylab="cnt", main="Boxplot cnt")
 mtext(text = paste("outliers: ", paste(bikes.cnt.outliers, collapse = ", ")), side = 1)
 ```
 
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que existem bastantes outliers presentes no gráfico.
 
 ## Including Plots
 
