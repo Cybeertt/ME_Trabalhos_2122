@@ -1,7 +1,10 @@
 ---
 title: "grupo2-trabalho1"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
-output: html_document
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
 ---
 
 
@@ -168,10 +171,6 @@ Variável Quantitativa Discreta, e é tratada como quantitativa discreta normal,
 
 ### Medidas de Tendência Central {#temp-mtc}
 
-```{r, eval=TRUE}
-# tabela de valores
-prop.table(bikes$temp)
-```
 
 ```{r, eval=TRUE}
 # Contagem de valores
@@ -251,7 +250,7 @@ De acordo com o resultado, é assimétrica negativa fraca (ou enviesada para a e
 bikes.temperatura.achatamento <- achatamento(bikes$temp)
 bikes.temperatura.achatamento
 ```
-Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+Curva platicúrtica, achatada, o que significa que os valores estão muito concentrados em torno da média e, consequentemente, existe uma variação baixa.
 
 ### Histograma {#temp-hist}
 ```{r, eval=TRUE}
@@ -277,7 +276,7 @@ table(cut(bikes$temp, breaks=bikes.temp.sturges.breaks))
 hist(bikes$temp, main="Histograma Temperature", xlab="Temperature",  ylab="Indice", nclass=bikes.temp.sturges.nclass)
 ```
 
-A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 28.6, a 81.90,  tendo um comportamento crescente até atingir o maior índice no intervalo de  81.5 a 90.3.
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0.02, a 1,  tendo um comportamento crescente até atingir o maior índice no intervalo de  0.608 a 0.673.
 
 ### Diagrama de Extremos e Quartis {#temp-extremo-quartil}
 ```{r, evail = T}
@@ -397,6 +396,8 @@ table(cut(bikes$weekday, breaks=bikes.weekday.sturges.breaks))
 # histograma
 hist(bikes$weekday, main="Histograma Weekday", xlab="Weekday",  ylab="Indice", nclass=bikes.weekday.sturges.nclass)
 ```
+A partir do histograma, pode-se observar que o valor do índice mantém se no intervalo 0 a 6,  tendo um comportamento crescente até atingir o maior índice no intervalo de  5.6 a 6.
+
 
 ### Diagrama de Extremos e Quartis {#weekday-extremo-quartil}
 ```{r, evail = T}
@@ -412,11 +413,6 @@ mtext(text = paste("outliers: ", paste(bikes.weekday.outliers, collapse = ", "))
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
-
-### Gráfico de Barras {#weekday-barras}
-```{r, evail = T}
-barplot(bikes$weekday, main = "Gráfico de Barras da Dia da Semana", ylab = "Frequencia")
-```
 
 
 ## **3.. casual** {#casual}
@@ -514,10 +510,31 @@ mtext(text = paste("outliers: ", paste(bikes.casual.outliers, collapse = ", ")),
 
 Verificou-se que não existem outliers presentes no gráfico.
 
-### Gráfico de Barras {#casual-barras}
-```{r, evail = T}
-barplot(bikes$casual, main = "Gráfico de Barras da Casual", ylab = "Frequencia")
+### Histograma {#casual-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+bikes.casual.sturges.nclass <- sturges(bikes$casual)
+bikes.casual.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+bikes.casual.sturges.amplitude <- amplitude(bikes$casual)
+bikes.casual.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+bikes.casual.sturges.breaks <- seq(bikes.casual.minima, bikes.casual.maxima, bikes.casual.sturges.amplitude)
+bikes.casual.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(bikes$casual, breaks=bikes.casual.sturges.breaks))
+
+# histograma
+hist(bikes$casual, main="Histograma casual", xlab="casual",  ylab="Indice", nclass=bikes.casual.sturges.nclass)
 ```
+
+A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 367,  tendo um comportamento crescente até atingir o maior índice no intervalo de  0 a 24.5.
 
 ## **4.. atemp** {#atemp}
 
