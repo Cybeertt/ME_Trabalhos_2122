@@ -905,12 +905,27 @@ mtext(text = paste("outliers: ", paste(bikes.cnt.outliers, collapse = ", ")), si
 
 Verificou-se que existem bastantes outliers presentes no gráfico.
 
-## Including Plots
+### Gráfico de Barras {#class-barras}
+```{r, evail = T}
+values <- c(nrow(bikes.day), nrow(bikes.night)) 
+labels <- c("Rent Day", "Rent Night")
 
-You can also embed plots, for example:
+barpercent<- round(100*x/sum(x), 1)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+barplot(values, names.arg=labels, space =1.0)
+```
+
+### Gráfico Circular {#class-circular}
+```{r, evail = T}
+
+x <- c(nrow(bikes.day), nrow(bikes.night))
+labels <- c("Rent Day", "Rent Night")
+
+piepercent<- round(100*x/sum(x), 1)
+
+pie(x, labels = piepercent, main = "Rent bikes pie chart",col = rainbow(length(x)))
+legend("topright", c("Rent Day", "Rent Night"), cex = 0.8,
+   fill = rainbow(length(x)))
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
