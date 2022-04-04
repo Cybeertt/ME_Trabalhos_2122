@@ -1,275 +1,269 @@
----
-title: "grupo2-trabalho1"
-subtitle: 'Unidade Curricular : M√©todos Estat√≠sticos'
-output: html_document
----
+#Parte Andrei
 
-First test
-Second Test
+#importar e ler ficheiro
+library(readxl)
+hour <- read_excel("C:/Users/andre/Desktop/ME/TP1/hour.xlsx")
+View(hour)
 
+### Todos os alugueres entre as 7 ‡s 18
+hour.day <- subset(hour, 6<hr & hr<19)
+View(hour.day)
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+### ver o tipo de dados
+str(hour.day)
 
-```{r, eval=TRUE}
-# moda
-moda <- function(x)
-{
-   ux <- unique(x)
-   tab <- tabulate(match(x, ux))
-   ux[tab == max(tab)]
-}
+# ver as primeira linhas
+head(hour.day)
+# ver as ˙ltimas linhas
+tail(hour.day)
 
-# formula sturges
-sturges <- function(x)
-{
-  floor((1 + log(length(x)) / log(2)))
-}
-
-# amplitude sturges
-amplitude <- function(x)
-{
-  max <- max(x)
-  min <- min(x)
-  nclass <- sturges(x)
-  (max - min) / nclass
-}
-
-# coeficiente de variacao
-coeficiente_variacao <- function(x)
-{
-  s <- sd(x)
-  m <- mean(x)
-  s/m * 100
-}
-
-# funcao de assimetria
-assimetria <- function(x)
-{
-  n <-length(x)
-  s <- sd(x)
-  m <- mean(x)
-  1/n * sum((x - m)^3/s^3)
-}
-
-# funcao de achatamento ou curtose
-achatamento <- function(x)
-{
-  n <- length(x)
-  s <- sd(x)
-  m <- mean(x)
-  1/n * sum((x - m)^4/s^4) - 3
-}
-
-# funcao de oulier quantiles
-outliers_quantiles <- function(x, o)
-{
-  sx <- sort(x)
-  n <- length(x)
-  nps <- c(round(n * .25), round(n * .50), round(n * .75))
-  qs <- c(sx[nps[1]],sx[nps[2]], sx[nps[3]])
-}
-
-# funcao de outlier moderado
-outlier_moderado <- function(x, o)
-{
-  result <- FALSE
-  oqs <- outliers_quantiles(x, o)
-  om <- c(oqs[1] - 1.5 * (oqs[3] - oqs[1]), oqs[1] - 3 * (oqs[3] - oqs[1]), oqs[3] + 1.5 * (oqs[3] - oqs[1]) , oqs[3] + 3 *  (oqs[3] - oqs[1]))
-  result <- ((o >= om[1] && o <= om[2]) || (o >= om[3] && o <= om[4]))
-  result
-}
-
-# funcao de oulier severo
-outlier_severo <- function(x, o)
-{
-  result <- FALSE
-  oqs <- outliers_quantiles(x, o)
-  os <- c(oqs[1] - 3 * (oqs[3] - oqs[1]), oqs[3] + 3 *  (oqs[3] - oqs[1]))
-  result <- (o < os[1]) || (o > os[2])
-  result
-}
-
-# funcao de outliers tipo moderado
-outliers_type_moderado <- function(x, os)
-{
-  result <- c()
-  if(!is.na(os[1]))
-  {
-    for(i in 1:length(os))
-    {
-      m <- outlier_moderado(x, os[i])
-      if (m)
-      {
-        result <- c(result, os[i])
-      }
-    }
-  }
-  result
-}
-
-# funcao de outliers tipo severo
-outliers_type_severo <- function(x, os)
-{
-  result <- c()
-  if(!is.na(os[1]))
-  {
-    for(i in 1:length(os))
-    {
-      s <- outlier_severo(x, os[i])
-      if (s)
-      {
-        result <- c(result, os[i])
-      }
-    }
-  }
-  result
-}
-```
-
-```{r, eval=TRUE}
-# importar dataset
-# alterar caminho para o vosso
-# importar dataset
-bikes.dataset <- "C:/Users/andre/Desktop/ME/ME_Trabalhos_2122/hour.csv"
-
-# regiao Bejaia, nordeste da bikes 
-bikes <- read.csv(file = bikes.dataset)
-
-# Classes is fire
-bikes.rentmore <- subset(bikes, cnt>500)
-
-# Classes is not fire
-bikes.rentless <- subset(bikes, cnt<=500)
-
-# Ver tabelas importadas no RStudio
-View(bikes)
-View(bikes.rentless)
-```
-
-
-```{r, evail = TRUE}
-# tabela frequencia
+### tabela frequencias
 local({
-  .Table <- with(bikes, table(cnt))
+  .Table <- with(hour, table(hr))
   cat("\ncounts:\n")
   print(.Table)
   cat("\npercentages:\n")
   print(round(100*.Table/sum(.Table), 2))
 })
-```
 
-```{r, eval = T}
-# quartis
-summary(bikes)
-```
-## **2.1. temp** {#temp}
+##################################################
+#quartis
+summary(hour.day)
 
-### Classifica√ß√£o da vari√°vel
+## **1. temp** {#temp}
 
-Vari√°vel Quantitativa Discreta, e √© tratada como quantitativa discreta normal, visto que, n√£o tem grande variedade de variaveis distintas.
+### ClassificaÁ„o da vari·vel
 
-### Medidas de Tend√™ncia Central {#temp-mtc}
+Vari·vel Quantitativa Discreta, e È tratada como quantitativa discreta normal,
+visto que, n„o tem grande variedade de variaveis distintas.
 
-#### Moda {#temp-moda}
-```{r, evail = T}
-bikes.temperatura.moda <- moda(bikes$temp)
-bikes.temperatura.moda
-```
+table(hour.day$temp)
 
-#### M√©dia {#temp-media}
-```{r, evail = T}
-bikes.temperatura.media <- mean(bikes$temp)
-bikes.temperatura.media
-```
+### Moda da temperatura
+hour.day.temp.sort <- sort(hour.day$temp)
+hour.day.temp.mode <- moda(hour.day.temp.sort)
+hour.day.temp.mode
+# 0.7
 
-#### Mediana {#temp-mediana}
-```{r, evail = T}
-bikes.temperatura.mediana <- median(bikes$temp)
-bikes.temperatura.mediana
-```
 
-#### Quartil {#temp-quartil}
-```{r, evail = T}
-bikes.temperatura.quantile <- quantile(bikes$temp)
-bikes.temperatura.quantile
-```
+### MÈdia da temperatura
+hour.day.temperatura.media <- mean(hour.day$temp)
+hour.day.temperatura.media
+# 0.5237
 
-### Medidas de Dispers√£o Central {#temp-mdc}
+### Mediana 
+hour.day.temperatura.mediana <- median(hour.day$temp)
+hour.day.temperatura.mediana
+# 0.52
 
-#### Vari√¢ncia {#temp-variancia}
-```{r, evail = T}
-bikes.temperatura.variancia <- var(bikes$temp)
-bikes.temperatura.variancia
-```
+### Quartil
+hour.day.temperatura.quantile <- quantile(hour.day$temp)
+hour.day.temperatura.quantile
+# 0%  25%  50%  75% 100% 
+#0.02 0.36 0.52 0.70 1.00
 
-#### Desvio Padr√£o {#temp-desvio}
-```{r, evail = T}
-bikes.temperatura.desvio_padrao <- sd(bikes$temp)
-bikes.temperatura.desvio_padrao
-```
+### Medidas de Dispers„o Central
 
-#### Coeficiente de Varia√ß√£o {#temp-cv}
-```{r, evail = T}
-bikes.temperatura.coeficiente_variacao <- coeficiente_variacao(bikes$temp)
-bikes.temperatura.coeficiente_variacao
-```
+### Vari‚ncia
+hour.day.temperatura.variancia <- var(hour.day$temp)
+hour.day.temperatura.variancia
+# 0.0401759
 
-### Valores Extremos {#temp-extremos}
+### Desvio Padr„o
+hour.day.temperatura.desvio_padrao <- sd(hour.day$temp)
+hour.day.temperatura.desvio_padrao
+# 0.2004393
 
-#### M√°ximo {#temp-max}
-```{r, evail = T}
-bikes.temperatura.maxima <- max(bikes$temp)
-bikes.temperatura.maxima
-```
+### Coeficiente de VariaÁ„o
+hour.day.temperatura.coeficiente_variacao <- coeficiente_variacao(hour.day$temp)
+hour.day.temperatura.coeficiente_variacao
+# 38.27561
 
-#### M√≠nimo {#temp-min}
-```{r, evail = T}
-bikes.temperatura.minima <- min(bikes$temp)
-bikes.temperatura.minima
-```
+### Valores Extremos
 
-### Medidas de Assimetria {#temp-assimetria}
-```{r, evail = T}
-bikes.temperatura.assimetria <- assimetria(bikes$temp)
-bikes.temperatura.assimetria
-```
-De acordo com o resultado, √© assim√©trica negativa (ou enviesada para a esquerda).
+### M·ximo
+hour.day.temperatura.maxima <- max(hour.day$temp)
+hour.day.temperatura.maxima
+# 1
 
-### Medidas de Curtose ou Achatamento {#temp-curtose}
-```{r, evail = T}
-bikes.temperatura.achatamento <- achatamento(bikes$temp)
-bikes.temperatura.achatamento
-```
-Curva platic√∫rtica, achatada, o que significa que os valores est√£o pouco concentrados em torno da m√©dia e, consequentemente, existe uma varia√ß√£o elevada.
+### MÌnimo
+hour.day.temperatura.minima <- min(hour.day$temp)
+hour.day.temperatura.minima
+# 0.02
 
-### Diagrama de Extremos e Quartis {#temp-extremo-quartil}
-```{r, evail = T}
+### Medidas de Assimetria
+hour.day.temperatura.assimetria <- assimetria(hour.day$temp)
+hour.day.temperatura.assimetria
+#-0.03380892
+# Logo conclui-se que È assimÈtrica negativa fraca (ou enviesada para a esquerda)
+
+### Medidas de Curtose ou Achatamento
+hour.day.temperatura.achatamento <- achatamento(hour.day$temp)
+hour.day.temperatura.achatamento
+#-0.998132
+# Logo conclui.se Curva platic˙rtica, achatada, o que significa
+# que os valores est„o muito concentrados em torno da mÈdia e, consequentemente,
+# existe uma variaÁ„o baixa.
+
+### Histograma
+
+# formula de sturges
+cat("N˙mero de classes\n")
+hour.day.temp.sturges.nclass <- sturges(hour.day$temp)
+hour.day.temp.sturges.nclass
+# 14 classes
+
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.day.temp.sturges.amplitude <- amplitude(hour.day$temp)
+hour.day.temp.sturges.amplitude
+# amplitude por classe 0.07
+
+# tabela de frequencias
+cat("\nClasses\n")
+hour.day.temp.sturges.breaks <- seq(hour.day.temperatura.minima, hour.day.temperatura.maxima, hour.day.temp.sturges.amplitude)
+hour.day.temp.sturges.breaks
+# 0.02 0.09 0.16 0.23 0.30 0.37 0.44 0.51 0.58 0.65 0.72 0.79 0.86 0.93 1.00
+
+cat("\nTabela de frequÍncias\n")
+table(cut(hour.day$temp, breaks=hour.day.temp.sturges.breaks))
+
+# histograma
+hist(hour.day$temp, main="Histograma Temperature during the day", xlab="Temperature",  ylab="Indice", nclass=hour.day.temp.sturges.nclass)
+# A partir do histograma, pode-se observar que o valor do Ìndice aumenta no intervalo 0.02, a 1,  tendo um comportamento crescente 
+# atÈ atingir o maior Ìndice no intervalo de  0.65 a 0.72.
+
+### Diagrama de Extremos e Quartis 
+
 # Outliers
 cat("\nOutliers\n")
-bikes.temperatura.outliers <- boxplot.stats(bikes$temp)$out
-bikes.temperatura.outliers
+hour.day.temperatura.outliers <- boxplot.stats(hour.day$temp)$out
+hour.day.temperatura.outliers
 
 # Diagrama
-boxplot(bikes$temp, ylab="Temperatura", main="Boxplot Temperatura")
+boxplot(hour.day$temp, ylab="Temperatura", main="Boxplot Temperatura")
+mtext(text = paste("outliers: ", paste(hour.day.temperatura.outliers, collapse = ", ")), side = 1)
 
-mtext(text = paste("outliers: ", paste(bikes.temperatura.outliers, collapse = ", ")), side = 1)
-```
-Verificou-se que n√£o existem outliers presentes no gr√°fico.
+# Verificou-se que n„o existem outliers presentes no gr·fico.
 
-### Gr√°fico de Barras {#temp-barras}
-```{r, evail = T}
-barplot(bikes$temp, main = "Gr√°fico de Barras da Temperatura", ylab = "Frequencia")
-```
+########################################################
+########################################################
+
+## **2. weekday** {#weekday}
+
+### ClassificaÁ„o da vari·vel
+
+Vari·vel qualitativa ordinal, e È tratada como quantitativa discreta normal,
+visto que, n„o tem grande variedade de variaveis distintas.
+
+table(hour.day$weekday)
+
+### Moda do dia da semana
+hour.day.weekday.sort <- sort(hour.day$weekday)
+hour.day.weekday.mode <- moda(hour.day.weekday.sort)
+hour.day.weekday.mode
+# 0 - domingo
 
 
-## Including Plots
+### MÈdia do dia da semana
+hour.day.weekday.media <- mean(hour.day$weekday)
+hour.day.weekday.media
+# 2.999886
 
-You can also embed plots, for example:
+### Mediana 
+hour.day.weekday.mediana <- median(hour.day$weekday)
+hour.day.weekday.mediana
+# 3
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+### Quartil
+hour.day.weekday.quantile <- quantile(hour.day$weekday)
+hour.day.weekday.quantile
+# 0%  25%  50%  75% 100% 
+#0    1    3    5    6
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Medidas de Dispers„o Central
+
+### Vari‚ncia
+hour.day.weekday.variancia <- var(hour.day$weekday)
+hour.day.weekday.variancia
+# 4.020945
+
+### Desvio Padr„o
+hour.day.weekday.desvio_padrao <- sd(hour.day$weekday)
+hour.day.weekday.desvio_padrao
+# 2.00523
+
+### Coeficiente de VariaÁ„o
+hour.day.weekday.coeficiente_variacao <- coeficiente_variacao(hour.day$weekday)
+hour.day.weekday.coeficiente_variacao
+# 66.84353
+
+### Valores Extremos
+
+### M·ximo
+hour.day.weekday.maxima <- max(hour.day$weekday)
+hour.day.weekday.maxima
+# 6
+
+### MÌnimo
+hour.day.weekday.minima <- min(hour.day$weekday)
+hour.day.weekday.minima
+# 0
+
+### Medidas de Assimetria
+hour.day.weekday.assimetria <- assimetria(hour.day$weekday)
+hour.day.weekday.assimetria
+#-0.0001836458
+# Logo conclui-se que È assimÈtrica negativa fraca (ou enviesada para a esquerda)
+
+### Medidas de Curtose ou Achatamento
+hour.day.weekday.achatamento <- achatamento(hour.day$weekday)
+hour.day.weekday.achatamento
+#-1.255535
+# Logo conclui.se Curva platic˙rtica, achatada, o que significa
+# que os valores est„o muito concentrados em torno da mÈdia e, consequentemente,
+# existe uma variaÁ„o baixa.
+
+### Histograma
+
+# formula de sturges
+cat("N˙mero de classes\n")
+hour.day.weekday.sturges.nclass <- sturges(hour.day$weekday)
+hour.day.weekday.sturges.nclass
+# 14 classes
+
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.day.weekday.sturges.amplitude <- amplitude(hour.day$weekday)
+hour.day.weekday.sturges.amplitude
+# amplitude por classe 0.4285714
+
+# tabela de frequencias
+cat("\nClasses\n")
+hour.day.weekday.sturges.breaks <- seq(hour.day.weekday.minima, hour.day.weekday.maxima, hour.day.weekday.sturges.amplitude)
+hour.day.weekday.sturges.breaks
+# 0.0000000 0.4285714 0.8571429 1.2857143 1.7142857 2.1428571 2.5714286 3.0000000 3.4285714 3.8571429
+# 4.2857143 4.7142857 5.1428571 5.5714286 6.0000000
+
+cat("\nTabela de frequÍncias\n")
+table(cut(hour.day$weekday, breaks=hour.day.weekday.sturges.breaks))
+
+# histograma
+hist(hour.day$weekday, main="Histograma Weekday", xlab="Weekday",  ylab="Indice", nclass=hour.day.weekday.sturges.nclass)
+# A partir do histograma, pode-se observar que o valor do Ìndice mantÈm se no intervalo 0 a 6,  tendo um comportamento
+# crescente atÈ atingir o maior Ìndice no intervalo de  5.6 a 6.
+
+### Diagrama de Extremos e Quartis 
+
+# Outliers
+cat("\nOutliers\n")
+hour.day.weekday.outliers <- boxplot.stats(hour.day$weekday)$out
+hour.day.weekday.outliers
+
+# Diagrama
+boxplot(hour.day$weekday, ylab="Temperatura", main="Boxplot Temperatura")
+mtext(text = paste("outliers: ", paste(hour.day.weekday.outliers, collapse = ", ")), side = 1)
+
+# Verificou-se que n„o existem outliers presentes no gr·fico.
