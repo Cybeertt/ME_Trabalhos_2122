@@ -1,11 +1,10 @@
 ---
 title: "grupo2-trabalho1"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
-
-First test
-Second Test
 
 
 ```{r setup, include=FALSE}
@@ -293,6 +292,136 @@ mtext(text = paste("outliers: ", paste(hour.temperatura.outliers, collapse = ", 
 Verificou-se que não existem outliers presentes no gráfico.
 
 
+## **1.1. temp** {#temp}
+
+### Classificação da variável
+
+Variável Qualitativa nominal, e é tratada como Qualitativa nominal normal, visto que, tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#temp-mtc}
+
+
+```{r, eval=TRUE}
+# Contagem de valores
+table(hour.day$temp)
+```
+
+
+#### Moda {#temp-moda}
+```{r, evail = T}
+hour.day.temp.sort <- sort(hour.day$temp)
+
+hour.day.temp.mode <- moda(hour.day.temp.sort)
+hour.day.temp.mode
+```
+
+#### Média {#temp-media}
+```{r, evail = T}
+hour.day.temperatura.media <- mean(hour.day$temp)
+hour.day.temperatura.media
+```
+
+#### Mediana {#temp-mediana}
+```{r, evail = T}
+hour.day.temperatura.mediana <- median(hour.day$temp)
+hour.day.temperatura.mediana
+```
+
+#### Quartil {#temp-quartil}
+```{r, evail = T}
+hour.day.temperatura.quantile <- quantile(hour.day$temp)
+hour.day.temperatura.quantile
+```
+
+### Medidas de Dispersão Central {#temp-mdc}
+
+#### Variância {#temp-variancia}
+```{r, evail = T}
+hour.day.temperatura.variancia <- var(hour.day$temp)
+hour.day.temperatura.variancia
+```
+
+#### Desvio Padrão {#temp-desvio}
+```{r, evail = T}
+hour.day.temperatura.desvio_padrao <- sd(hour.day$temp)
+hour.day.temperatura.desvio_padrao
+```
+
+#### Coeficiente de Variação {#temp-cv}
+```{r, evail = T}
+hour.day.temperatura.coeficiente_variacao <- coeficiente_variacao(hour.day$temp)
+hour.day.temperatura.coeficiente_variacao
+```
+
+### Valores Extremos {#temp-extremos}
+
+#### Máximo {#temp-max}
+```{r, evail = T}
+hour.day.temperatura.maxima <- max(hour.day$temp)
+hour.day.temperatura.maxima
+```
+
+#### Mínimo {#temp-min}
+```{r, evail = T}
+hour.day.temperatura.minima <- min(hour.day$temp)
+hour.day.temperatura.minima
+```
+
+### Medidas de Assimetria {#temp-assimetria}
+```{r, evail = T}
+hour.day.temperatura.assimetria <- assimetria(hour.day$temp)
+hour.day.temperatura.assimetria
+```
+De acordo com o resultado, é assimétrica negativa fraca (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#temp-curtose}
+```{r, evail = T}
+hour.day.temperatura.achatamento <- achatamento(hour.day$temp)
+hour.day.temperatura.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#temp-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+hour.day.temp.sturges.nclass <- sturges(hour.day$temp)
+hour.day.temp.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.day.temp.sturges.amplitude <- amplitude(hour.day$temp)
+hour.day.temp.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+hour.day.temp.sturges.breaks <- seq(hour.day.temperatura.minima, hour.day.temperatura.maxima, hour.day.temp.sturges.amplitude)
+hour.day.temp.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(hour.day$temp, breaks=hour.day.temp.sturges.breaks))
+
+# histograma
+hist(hour.day$temp, main="Histograma Temperature", xlab="Temperature",  ylab="Indice", nclass=hour.day.temp.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0.02, a 0.72 e começa a diminuir de 0.72 a 1 tendo um comportamento crescente até atingir o maior índice no intervalo de  0.65 a 0.72.
+
+### Diagrama de Extremos e Quartis {#temp-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.day.temperatura.outliers <- boxplot.stats(hour.day$temp)$out
+hour.day.temperatura.outliers
+
+# Diagrama
+boxplot(hour.day$temp, ylab="Temperatura", main="Boxplot Temperatura")
+
+mtext(text = paste("outliers: ", paste(hour.day.temperatura.outliers, collapse = ", ")), side = 1)
+```
+Verificou-se que não existem outliers presentes no gráfico.
+
+
 ## **1.2. temp** {#temp}
 
 ### Classificação da variável
@@ -524,6 +653,112 @@ hour.weekday.outliers
 boxplot(hour$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
 
 mtext(text = paste("outliers: ", paste(hour.weekday.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
+## **2.1. weekday** {#weekday}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#weekday-mtc}
+
+#### Moda {#weekday-moda}
+```{r, evail = T}
+hour.day.weekday.moda <- moda(hour.day$weekday)
+hour.day.weekday.moda
+```
+
+#### Média {#weekday-media}
+```{r, evail = T}
+hour.day.weekday.media <- mean(hour.day$weekday)
+hour.day.weekday.media
+```
+
+#### Mediana {#weekday-mediana}
+```{r, evail = T}
+hour.day.weekday.mediana <- median(hour.day$weekday)
+hour.day.weekday.mediana
+```
+
+#### Quartil {#weekday-quartil}
+```{r, evail = T}
+hour.day.weekday.quantile <- quantile(hour.day$weekday)
+hour.day.weekday.quantile
+```
+
+### Medidas de Dispersão Central {#weekday-mdc}
+
+#### Variância {#weekday-variancia}
+```{r, evail = T}
+hour.day.weekday.variancia <- var(hour.day$weekday)
+hour.day.weekday.variancia
+```
+
+#### Desvio Padrão {#weekday-desvio}
+```{r, evail = T}
+hour.day.weekday.desvio_padrao <- sd(hour.day$weekday)
+hour.day.weekday.desvio_padrao
+```
+
+#### Coeficiente de Variação {#weekday-cv}
+```{r, evail = T}
+hour.day.weekday.coeficiente_variacao <- coeficiente_variacao(hour.day$weekday)
+hour.day.weekday.coeficiente_variacao
+```
+
+### Valores Extremos {#weekday-extremos}
+
+#### Máximo {#weekday-max}
+```{r, evail = T}
+hour.day.weekday.maxima <- max(hour.day$weekday)
+hour.day.weekday.maxima
+```
+
+#### Mínimo {#weekday-min}
+```{r, evail = T}
+hour.day.weekday.minima <- min(hour.day$weekday)
+hour.day.weekday.minima
+```
+
+### Medidas de Assimetria {#weekday-assimetria}
+```{r, evail = T}
+hour.day.weekday.assimetria <- assimetria(hour.day$weekday)
+hour.day.weekday.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#weekday-curtose}
+```{r, evail = T}
+hour.day.weekday.achatamento <- achatamento(hour.day$weekday)
+hour.day.weekday.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Grafico de barras {#weekday-hist}
+```{r, eval=TRUE}
+
+count <- table(hour.day$weekday)
+
+barplot(count, main="Dias da semana", xlab="Weekday",  ylab="Indice", space =1.0)
+box(bty="L")
+```
+A partir do Gráfico de barras, pode-se observar que o valor do índice mantém se no intervalo 0 a 6,  tendo um comportamento crescente até atingir o maior índice que é 6.
+
+
+### Diagrama de Extremos e Quartis {#weekday-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.day.weekday.outliers <- boxplot.stats(hour.day$weekday)$out
+hour.day.weekday.outliers
+
+# Diagrama
+boxplot(hour.day$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
+
+mtext(text = paste("outliers: ", paste(hour.day.weekday.outliers, collapse = ", ")), side = 1)
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
