@@ -1480,9 +1480,9 @@ Verificou-se que não existem outliers presentes no gráfico.
 
 ## **4.2. atemp** {#atemp}
 
-### Classifica??o da vari?vel
+### Classificacao da variavel
 
-Vari?vel quantitativa cont?nua, e ? tratada como quantitativa cont?nua normal, visto que, tem grande variedade de variaveis distintas.
+Variavel quantitativa continua, e e tratada como quantitativa continua normal, visto que, tem grande variedade de variaveis distintas.
 
 ### Medidas de Tendência Central {#atemp-mtc}
 
@@ -1510,7 +1510,7 @@ hour.night.atemp.quantile <- quantile(hour.night$atemp)
 hour.night.atemp.quantile
 ```
 
-### Medidas de Dispers?o Central {#atemp-mdc}
+### Medidas de Dispersao Central {#atemp-mdc}
 
 #### Variância {#atemp-variancia}
 ```{r, evail = T}
@@ -1556,7 +1556,7 @@ De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerd
 hour.night.atemp.achatamento <- achatamento(hour.night$atemp)
 hour.night.atemp.achatamento
 ```
-Curva platicúrtica, achatada, o que significa que os valores est?o pouco concentrados em torno da média e, consequentemente, existe uma varia??o elevada.
+Curva platicúrtica, achatada, o que significa que os valores estao pouco concentrados em torno da média e, consequentemente, existe uma variacao elevada.
 
 
 ### Histograma {#atemp-hist}
