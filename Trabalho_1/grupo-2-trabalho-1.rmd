@@ -11,6 +11,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Primeiro de tudo correr as funções que vão utilizar para o programa.
+
 ```{r, eval=TRUE}
 # moda
 moda <- function(x)
@@ -289,7 +291,7 @@ boxplot(hour$temp, ylab="Temperatura", main="Boxplot Temperatura")
 
 mtext(text = paste("outliers: ", paste(hour.temperatura.outliers, collapse = ", ")), side = 1)
 ```
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 
 ## **1.1. temp** {#temp}
@@ -419,7 +421,7 @@ boxplot(hour.day$temp, ylab="Temperatura", main="Boxplot Temperatura")
 
 mtext(text = paste("outliers: ", paste(hour.day.temperatura.outliers, collapse = ", ")), side = 1)
 ```
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 
 ## **1.2. temp** {#temp}
@@ -549,7 +551,7 @@ boxplot(hour.night$temp, ylab="Temperatura", main="Boxplot Temperatura")
 
 mtext(text = paste("outliers: ", paste(hour.night.temperatura.outliers, collapse = ", ")), side = 1)
 ```
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 ## **2.. weekday** {#weekday}
 
@@ -655,7 +657,7 @@ boxplot(hour$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
 mtext(text = paste("outliers: ", paste(hour.weekday.outliers, collapse = ", ")), side = 1)
 ```
 
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 ## **2.1. weekday** {#weekday}
 
@@ -761,7 +763,7 @@ boxplot(hour.day$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
 mtext(text = paste("outliers: ", paste(hour.day.weekday.outliers, collapse = ", ")), side = 1)
 ```
 
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 ## **2.2. weekday** {#weekday}
 
@@ -867,7 +869,7 @@ boxplot(hour.night$weekday, ylab="Dia da Semana", main="Boxplot Dia da Semana")
 mtext(text = paste("outliers: ", paste(hour.night.weekday.outliers, collapse = ", ")), side = 1)
 ```
 
-Verificou-se que não existem outliers presentes no gráfico.
+Verificou-se que não existem outliers presentes no gráfico porque os resultados da coluna não estão fora do diagrama de extremos e quartis. 
 
 
 ## **3.. casual** {#casual}
@@ -1213,7 +1215,7 @@ table(cut(hour.night$casual, breaks=hour.night.casual.sturges.breaks))
 hist(hour.night$casual, main="Histograma casual", xlab="casual",  ylab="Indice", nclass=hour.night.casual.sturges.nclass)
 ```
 
-A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 367,  tendo um comportamento decrescente até atingir o maior índice no intervalo de  0 a 24.5.
+A partir do histograma de utilizadores casuais do weekday(dia da semana), pode-se observar que o valor do índice diminui no intervalo 0 a 367, tendo um comportamento decrescente e atingi o maior índice no intervalo de 0 a 26.2. 
 
 
 ### Diagrama de Extremos e Quartis {#casual-extremo-quartil}
@@ -1833,6 +1835,130 @@ mtext(text = paste("outliers: ", paste(hour.day.hum.outliers, collapse = ", ")),
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
+
+
+## **5.2. hum** {#hum}
+
+### Classificação da Variável
+
+Variável quantitativa contínua, e é tratada como quantitativa contínua normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#hum-mtc}
+
+#### Moda {#hum-moda}
+```{r, evail = T}
+hour.night.hum.moda <- moda(hour.night$hum)
+hour.night.hum.moda
+```
+
+#### média {#hum-media}
+```{r, evail = T}
+hour.night.hum.media <- mean(hour.night$hum)
+hour.night.hum.media
+```
+
+#### Mediana {#hum-mediana}
+```{r, evail = T}
+hour.night.hum.mediana <- median(hour.night$hum)
+hour.night.hum.mediana
+```
+
+#### Quartil {#hum-quartil}
+```{r, evail = T}
+hour.night.hum.quantile <- quantile(hour.night$hum)
+hour.night.hum.quantile
+```
+
+### Medidas de Dispersão Central {#hum-mdc}
+
+#### Variância {#hum-variancia}
+```{r, evail = T}
+hour.night.hum.variancia <- var(hour.night$hum)
+hour.night.hum.variancia
+```
+
+#### Desvio Padrão {#hum-desvio}
+```{r, evail = T}
+hour.night.hum.desvio_padrao <- sd(hour.night$hum)
+hour.night.hum.desvio_padrao
+```
+
+#### Coeficiente de variação {#hum-cv}
+```{r, evail = T}
+hour.night.hum.coeficiente_variacao <- coeficiente_variacao(hour.night$hum)
+hour.night.hum.coeficiente_variacao
+```
+
+### Valores Extremos {#hum-extremos}
+
+#### Máximo {#hum-max}
+```{r, evail = T}
+hour.night.hum.maxima <- max(hour.night$hum)
+hour.night.hum.maxima
+```
+
+#### Mínimo {#hum-min}
+```{r, evail = T}
+hour.night.hum.minima <- min(hour.night$hum)
+hour.night.hum.minima
+```
+
+### Medidas de Assimetria {#hum-assimetria}
+```{r, evail = T}
+hour.night.hum.assimetria <- assimetria(hour.night$hum)
+hour.night.hum.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#hum-curtose}
+```{r, evail = T}
+hour.night.hum.achatamento <- achatamento(hour.night$hum)
+hour.night.hum.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#hum-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+hour.night.hum.sturges.nclass <- sturges(hour.night$hum)
+hour.night.hum.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.night.hum.sturges.amplitude <- amplitude(hour.night$hum)
+hour.night.hum.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+hour.night.hum.sturges.breaks <- seq(hour.night.hum.minima, hour.night.hum.maxima, hour.night.hum.sturges.amplitude)
+hour.night.hum.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(hour.night$hum, breaks=hour.night.hum.sturges.breaks))
+
+# histograma
+hist(hour.night$hum, main="Histograma hum", xlab="hum",  ylab="Indice", nclass=hour.night.hum.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0 a 0.714 e diminui no intervalo 0.714 a 1,  tendo um comportamento crescente e decrescente até atingir o maior índice no intervalo de 0.643 a 0.714.
+
+
+### Diagrama de Extremos e Quartis {#hum-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.night.hum.outliers <- boxplot.stats(hour.night$hum)$out
+hour.night.hum.outliers
+
+# Diagrama
+boxplot(hour.night$hum, ylab="hum", main="Boxplot hum")
+
+mtext(text = paste("outliers: ", paste(hour.night.hum.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que existem outliers presentes no gráfico no ponto 0 e perto dele.
+
 
 ## **6.. cnt** {#cnt}
 
