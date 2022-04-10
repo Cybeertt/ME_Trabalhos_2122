@@ -1354,7 +1354,7 @@ mtext(text = paste("outliers: ", paste(hour.atemp.outliers, collapse = ", ")), s
 Verificou-se que não existem outliers presentes no gráfico.
 
 
-## **4.. atemp** {#atemp}
+## **4.1. atemp** {#atemp}
 
 ### Classificação da variável
 
@@ -1364,73 +1364,73 @@ Variável quantitativa contínua, e é tratada como quantitativa contínua norma
 
 #### Moda {#atemp-moda}
 ```{r, evail = T}
-hour.atemp.moda <- moda(hour$atemp)
-hour.atemp.moda
+hour.day.atemp.moda <- moda(hour.day$atemp)
+hour.day.atemp.moda
 ```
 
 #### Média {#atemp-media}
 ```{r, evail = T}
-hour.atemp.media <- mean(hour$atemp)
-hour.atemp.media
+hour.day.atemp.media <- mean(hour.day$atemp)
+hour.day.atemp.media
 ```
 
 #### Mediana {#atemp-mediana}
 ```{r, evail = T}
-hour.atemp.mediana <- median(hour$atemp)
-hour.atemp.mediana
+hour.day.atemp.mediana <- median(hour.day$atemp)
+hour.day.atemp.mediana
 ```
 
 #### Quartil {#atemp-quartil}
 ```{r, evail = T}
-hour.atemp.quantile <- quantile(hour$atemp)
-hour.atemp.quantile
+hour.day.atemp.quantile <- quantile(hour.day$atemp)
+hour.day.atemp.quantile
 ```
 
 ### Medidas de Dispersão Central {#atemp-mdc}
 
 #### Variância {#atemp-variancia}
 ```{r, evail = T}
-hour.atemp.variancia <- var(hour$atemp)
-hour.atemp.variancia
+hour.day.atemp.variancia <- var(hour.day$atemp)
+hour.day.atemp.variancia
 ```
 
 #### Desvio Padrão {#atemp-desvio}
 ```{r, evail = T}
-hour.atemp.desvio_padrao <- sd(hour$atemp)
-hour.atemp.desvio_padrao
+hour.day.atemp.desvio_padrao <- sd(hour.day$atemp)
+hour.day.atemp.desvio_padrao
 ```
 
 #### Coeficiente de Variação {#atemp-cv}
 ```{r, evail = T}
-hour.atemp.coeficiente_variacao <- coeficiente_variacao(hour$atemp)
-hour.atemp.coeficiente_variacao
+hour.day.atemp.coeficiente_variacao <- coeficiente_variacao(hour.day$atemp)
+hour.day.atemp.coeficiente_variacao
 ```
 
 ### Valores Extremos {#atemp-extremos}
 
 #### Máximo {#atemp-max}
 ```{r, evail = T}
-hour.atemp.maxima <- max(hour$atemp)
-hour.atemp.maxima
+hour.day.atemp.maxima <- max(hour.day$atemp)
+hour.day.atemp.maxima
 ```
 
 #### Mínimo {#atemp-min}
 ```{r, evail = T}
-hour.atemp.minima <- min(hour$atemp)
-hour.atemp.minima
+hour.day.atemp.minima <- min(hour.day$atemp)
+hour.day.atemp.minima
 ```
 
 ### Medidas de Assimetria {#atemp-assimetria}
 ```{r, evail = T}
-hour.atemp.assimetria <- assimetria(hour$atemp)
-hour.atemp.assimetria
+hour.day.atemp.assimetria <- assimetria(hour.day$atemp)
+hour.day.atemp.assimetria
 ```
 De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
 
 ### Medidas de Curtose ou Achatamento {#atemp-curtose}
 ```{r, evail = T}
-hour.atemp.achatamento <- achatamento(hour$atemp)
-hour.atemp.achatamento
+hour.day.atemp.achatamento <- achatamento(hour.day$atemp)
+hour.day.atemp.achatamento
 ```
 Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
 
@@ -1439,24 +1439,20 @@ Curva platicúrtica, achatada, o que significa que os valores estão pouco conce
 ```{r, eval=TRUE}
 # formula de sturges
 cat("Número de classes\n")
-hour.atemp.sturges.nclass <- sturges(hour$atemp)
-hour.atemp.sturges.nclass
-
+hour.day.atemp.sturges.nclass <- sturges(hour.day$atemp)
+hour.day.atemp.sturges.nclass
 # amplitude da classe
 cat("\nAmplitude da classe\n")
-hour.atemp.sturges.amplitude <- amplitude(hour$atemp)
-hour.atemp.sturges.amplitude
-
+hour.day.atemp.sturges.amplitude <- amplitude(hour.day$atemp)
+hour.day.atemp.sturges.amplitude
 # tabela de frequencias
 cat("\nClasses\n")
-hour.atemp.sturges.breaks <- seq(hour.atemp.minima, hour.atemp.maxima, hour.atemp.sturges.amplitude)
-hour.atemp.sturges.breaks
-
+hour.day.atemp.sturges.breaks <- seq(hour.day.atemp.minima, hour.day.atemp.maxima, hour.day.atemp.sturges.amplitude)
+hour.day.atemp.sturges.breaks
 cat("\nTabela de frequências\n")
-table(cut(hour$atemp, breaks=hour.atemp.sturges.breaks))
-
+table(cut(hour.day$atemp, breaks=hour.day.atemp.sturges.breaks))
 # histograma
-hist(hour$atemp, main="Histograma atemp", xlab="atemp",  ylab="Indice", nclass=hour.atemp.sturges.nclass)
+hist(hour.day$atemp, main="Histograma atemp", xlab="atemp",  ylab="Indice", nclass=hour.day.atemp.sturges.nclass)
 ```
 
 A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0 a 0.5337 e diminui no intervalo 0.5337 a 1,  tendo um comportamento crescente e decrescente até atingir o maior índice no intervalo de 0.467 a 0.533.
@@ -1466,13 +1462,11 @@ A partir do histograma, pode-se observar que o valor do índice aumenta no inter
 ```{r, evail = T}
 # Outliers
 cat("\nOutliers\n")
-hour.atemp.outliers <- boxplot.stats(hour$atemp)$out
-hour.atemp.outliers
-
+hour.day.atemp.outliers <- boxplot.stats(hour.day$atemp)$out
+hour.day.atemp.outliers
 # Diagrama
-boxplot(hour$atemp, ylab="atemp", main="Boxplot atemp")
-
-mtext(text = paste("outliers: ", paste(hour.atemp.outliers, collapse = ", ")), side = 1)
+boxplot(hour.day$atemp, ylab="atemp", main="Boxplot atemp")
+mtext(text = paste("outliers: ", paste(hour.day.atemp.outliers, collapse = ", ")), side = 1)
 ```
 
 Verificou-se que não existem outliers presentes no gráfico.
@@ -1724,6 +1718,122 @@ mtext(text = paste("outliers: ", paste(hour.hum.outliers, collapse = ", ")), sid
 
 Verificou-se que existem outliers presentes no gráfico no ponto 0.
 
+## **5.1. hum** {#hum}
+
+### Classificação da variável
+
+Variável quantitativa contínua, e é tratada como quantitativa contínua normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#hum-mtc}
+
+#### Moda {#hum-moda}
+```{r, evail = T}
+hour.day.hum.moda <- moda(hour.day$hum)
+hour.day.hum.moda
+```
+
+#### Média {#hum-media}
+```{r, evail = T}
+hour.day.hum.media <- mean(hour.day$hum)
+hour.day.hum.media
+```
+
+#### Mediana {#hum-mediana}
+```{r, evail = T}
+hour.day.hum.mediana <- median(hour.day$hum)
+hour.day.hum.mediana
+```
+
+#### Quartil {#hum-quartil}
+```{r, evail = T}
+hour.day.hum.quantile <- quantile(hour.day$hum)
+hour.day.hum.quantile
+```
+
+### Medidas de Dispersão Central {#hum-mdc}
+
+#### Variância {#hum-variancia}
+```{r, evail = T}
+hour.day.hum.variancia <- var(hour.day$hum)
+hour.day.hum.variancia
+```
+
+#### Desvio Padrão {#hum-desvio}
+```{r, evail = T}
+hour.day.hum.desvio_padrao <- sd(hour.day$hum)
+hour.day.hum.desvio_padrao
+```
+
+#### Coeficiente de Variação {#hum-cv}
+```{r, evail = T}
+hour.day.hum.coeficiente_variacao <- coeficiente_variacao(hour.day$hum)
+hour.day.hum.coeficiente_variacao
+```
+
+### Valores Extremos {#hum-extremos}
+
+#### Máximo {#hum-max}
+```{r, evail = T}
+hour.day.hum.maxima <- max(hour.day$hum)
+hour.day.hum.maxima
+```
+
+#### Mínimo {#hum-min}
+```{r, evail = T}
+hour.day.hum.minima <- min(hour.day$hum)
+hour.day.hum.minima
+```
+
+### Medidas de Assimetria {#hum-assimetria}
+```{r, evail = T}
+hour.day.hum.assimetria <- assimetria(hour.day$hum)
+hour.day.hum.assimetria
+```
+De acordo com o resultado, é assimétrica negativa (ou enviesada para a esquerda).
+
+### Medidas de Curtose ou Achatamento {#hum-curtose}
+```{r, evail = T}
+hour.day.hum.achatamento <- achatamento(hour.day$hum)
+hour.day.hum.achatamento
+```
+Curva platicúrtica, achatada, o que significa que os valores estão pouco concentrados em torno da média e, consequentemente, existe uma variação elevada.
+
+### Histograma {#hum-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+hour.day.hum.sturges.nclass <- sturges(hour.day$hum)
+hour.day.hum.sturges.nclass
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.day.hum.sturges.amplitude <- amplitude(hour.day$hum)
+hour.day.hum.sturges.amplitude
+# tabela de frequencias
+cat("\nClasses\n")
+hour.day.hum.sturges.breaks <- seq(hour.day.hum.minima, hour.day.hum.maxima, hour.day.hum.sturges.amplitude)
+hour.day.hum.sturges.breaks
+cat("\nTabela de frequências\n")
+table(cut(hour.day$hum, breaks=hour.day.hum.sturges.breaks))
+# histograma
+hist(hour.day$hum, main="Histograma hum", xlab="hum",  ylab="Indice", nclass=hour.day.hum.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice aumenta no intervalo 0.429 a 0.5 e diminui no intervalo 0.5 a 1,  tendo um comportamento crescente e decrescente até atingir o maior índice no intervalo de 0.429 a 0.5.
+
+
+### Diagrama de Extremos e Quartis {#hum-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.day.hum.outliers <- boxplot.stats(hour.day$hum)$out
+hour.day.hum.outliers
+# Diagrama
+boxplot(hour.day$hum, ylab="hum", main="Boxplot hum")
+mtext(text = paste("outliers: ", paste(hour.day.hum.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que não existem outliers presentes no gráfico.
+
 ## **6.. cnt** {#cnt}
 
 ### Classificação da variável
@@ -1845,6 +1955,246 @@ mtext(text = paste("outliers: ", paste(hour.cnt.outliers, collapse = ", ")), sid
 ```
 
 Verificou-se que existem bastantes outliers presentes no gráfico.
+
+
+## **6.1. cnt** {#cnt}
+
+### Classificação da variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#cnt-mtc}
+
+#### Moda {#cnt-moda}
+```{r, evail = T}
+hour.day.cnt.moda <- moda(hour.day$cnt)
+hour.day.cnt.moda
+```
+
+#### Média {#cnt-media}
+```{r, evail = T}
+hour.day.cnt.media <- mean(hour.day$cnt)
+hour.day.cnt.media
+```
+
+#### Mediana {#cnt-mediana}
+```{r, evail = T}
+hour.day.cnt.mediana <- median(hour.day$cnt)
+hour.day.cnt.mediana
+```
+
+#### Quartil {#cnt-quartil}
+```{r, evail = T}
+hour.day.cnt.quantile <- quantile(hour.day$cnt)
+hour.day.cnt.quantile
+```
+
+### Medidas de Dispersão Central {#cnt-mdc}
+
+#### Variância {#cnt-variancia}
+```{r, evail = T}
+hour.day.cnt.variancia <- var(hour.day$cnt)
+hour.day.cnt.variancia
+```
+
+#### Desvio Padrão {#cnt-desvio}
+```{r, evail = T}
+hour.day.cnt.desvio_padrao <- sd(hour.day$cnt)
+hour.day.cnt.desvio_padrao
+```
+
+#### Coeficiente de Variação {#cnt-cv}
+```{r, evail = T}
+hour.day.cnt.coeficiente_variacao <- coeficiente_variacao(hour.day$cnt)
+hour.day.cnt.coeficiente_variacao
+```
+
+### Valores Extremos {#cnt-extremos}
+
+#### Máximo {#cnt-max}
+```{r, evail = T}
+hour.day.cnt.maxima <- max(hour.day$cnt)
+hour.day.cnt.maxima
+```
+
+#### Mínimo {#cnt-min}
+```{r, evail = T}
+hour.day.cnt.minima <- min(hour.day$cnt)
+hour.day.cnt.minima
+```
+
+### Medidas de Assimetria {#cnt-assimetria}
+```{r, evail = T}
+hour.day.cnt.assimetria <- assimetria(hour.day$cnt)
+hour.day.cnt.assimetria
+```
+De acordo com o resultado, é assimétrica positiva (ou enviesada para a direita).
+
+
+### Medidas de Curtose ou Achatamento {#cnt-curtose}
+```{r, evail = T}
+hour.day.cnt.achatamento <- achatamento(hour.day$cnt)
+hour.day.cnt.achatamento
+```
+Curva leptocúrtica, alongada, o que significa que os valores estão muito concentrados em torno da média e, consequentemente, existe uma variação é pouco elevada.
+
+### Histograma {#cnt-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+hour.day.cnt.sturges.nclass <- sturges(hour.day$cnt)
+hour.day.cnt.sturges.nclass
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.day.cnt.sturges.amplitude <- amplitude(hour.day$cnt)
+hour.day.cnt.sturges.amplitude
+# tabela de frequencias
+cat("\nClasses\n")
+hour.day.cnt.sturges.breaks <- seq(hour.day.cnt.minima, hour.day.cnt.maxima, hour.day.cnt.sturges.amplitude)
+hour.day.cnt.sturges.breaks
+cat("\nTabela de frequências\n")
+table(cut(hour.day$cnt, breaks=hour.day.cnt.sturges.breaks))
+# histograma
+hist(hour.day$cnt, main="Histograma cnt", xlab="cnt",  ylab="Indice", nclass=hour.day.cnt.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 977,  tendo um comportamento decrescente até atingir o maior índice no intervalo de  1 a 66.1.
+
+### Diagrama de Extremos e Quartis {#cnt-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.day.cnt.outliers <- boxplot.stats(hour.day$cnt)$out
+hour.day.cnt.outliers
+# Diagrama
+boxplot(hour.day$cnt, ylab="cnt", main="Boxplot cnt")
+mtext(text = paste("outliers: ", paste(hour.day.cnt.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que existem bastantes outliers presentes no gráfico.
+
+## **6.2. cnt** {#cnt}
+
+### Classificação da Variável
+
+Variável qualitativa ordinal, e é tratada como quantitativa discreta normal, visto que, não tem grande variedade de variaveis distintas.
+
+### Medidas de Tendência Central {#cnt-mtc}
+
+#### Moda {#cnt-moda}
+```{r, evail = T}
+hour.night.cnt.moda <- moda(hour.night$cnt)
+hour.night.cnt.moda
+```
+
+#### média {#cnt-media}
+```{r, evail = T}
+hour.night.cnt.media <- mean(hour.night$cnt)
+hour.night.cnt.media
+```
+
+#### Mediana {#cnt-mediana}
+```{r, evail = T}
+hour.night.cnt.mediana <- median(hour.night$cnt)
+hour.night.cnt.mediana
+```
+
+#### Quartil {#cnt-quartil}
+```{r, evail = T}
+hour.night.cnt.quantile <- quantile(hour.night$cnt)
+hour.night.cnt.quantile
+```
+
+### Medidas de Dispersão Central {#cnt-mdc}
+
+#### Variância {#cnt-variancia}
+```{r, evail = T}
+hour.night.cnt.variancia <- var(hour.night$cnt)
+hour.night.cnt.variancia
+```
+
+#### Desvio Padrão {#cnt-desvio}
+```{r, evail = T}
+hour.night.cnt.desvio_padrao <- sd(hour.night$cnt)
+hour.night.cnt.desvio_padrao
+```
+
+#### Coeficiente de variação {#cnt-cv}
+```{r, evail = T}
+hour.night.cnt.coeficiente_variacao <- coeficiente_variacao(hour.night$cnt)
+hour.night.cnt.coeficiente_variacao
+```
+
+### Valores Extremos {#cnt-extremos}
+
+#### Máximo {#cnt-max}
+```{r, evail = T}
+hour.night.cnt.maxima <- max(hour.night$cnt)
+hour.night.cnt.maxima
+```
+
+#### Mínimo {#cnt-min}
+```{r, evail = T}
+hour.night.cnt.minima <- min(hour.night$cnt)
+hour.night.cnt.minima
+```
+
+### Medidas de Assimetria {#cnt-assimetria}
+```{r, evail = T}
+hour.night.cnt.assimetria <- assimetria(hour.night$cnt)
+hour.night.cnt.assimetria
+```
+De acordo com o resultado, é assimétrica positiva (ou enviesada para a direita).
+
+
+### Medidas de Curtose ou Achatamento {#cnt-curtose}
+```{r, evail = T}
+hour.night.cnt.achatamento <- achatamento(hour.night$cnt)
+hour.night.cnt.achatamento
+```
+Curva leptocúrtica, alongada, o que significa que os valores estão muito concentrados em torno da média e, consequentemente, existe uma variação é pouco elevada.
+
+### Histograma {#cnt-hist}
+```{r, eval=TRUE}
+# formula de sturges
+cat("Número de classes\n")
+hour.night.cnt.sturges.nclass <- sturges(hour.night$cnt)
+hour.night.cnt.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.night.cnt.sturges.amplitude <- amplitude(hour.night$cnt)
+hour.night.cnt.sturges.amplitude
+
+# tabela de frequencias
+cat("\nClasses\n")
+hour.night.cnt.sturges.breaks <- seq(hour.night.cnt.minima, hour.night.cnt.maxima, hour.night.cnt.sturges.amplitude)
+hour.night.cnt.sturges.breaks
+
+cat("\nTabela de frequências\n")
+table(cut(hour.night$cnt, breaks=hour.night.cnt.sturges.breaks))
+
+# histograma
+hist(hour.night$cnt, main="Histograma cnt", xlab="cnt",  ylab="Indice", nclass=hour.night.cnt.sturges.nclass)
+```
+
+A partir do histograma, pode-se observar que o valor do índice diminui no intervalo 0, a 743,  tendo um comportamento decrescente até atingir o maior índice no intervalo de  2 a 743.
+
+### Diagrama de Extremos e Quartis {#cnt-extremo-quartil}
+```{r, evail = T}
+# Outliers
+cat("\nOutliers\n")
+hour.night.cnt.outliers <- boxplot.stats(hour.night$cnt)$out
+hour.night.cnt.outliers
+
+# Diagrama
+boxplot(hour.night$cnt, ylab="cnt", main="Boxplot cnt")
+
+mtext(text = paste("outliers: ", paste(hour.night.cnt.outliers, collapse = ", ")), side = 1)
+```
+
+Verificou-se que existem bastantes outliers presentes no gráfico.
+
 
 ### Gráfico de Barras {#class-barras}
 ```{r, evail = T}
