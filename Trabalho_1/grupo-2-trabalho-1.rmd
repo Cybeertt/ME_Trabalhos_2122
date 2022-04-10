@@ -2,8 +2,8 @@
 title: "grupo2-trabalho1"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 
