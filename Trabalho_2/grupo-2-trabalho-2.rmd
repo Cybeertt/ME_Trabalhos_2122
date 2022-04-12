@@ -1,0 +1,126 @@
+---
+title: "grupo2-trabalho1"
+subtitle: 'Unidade Curricular : Métodos Estatísticos'
+output:
+  html_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r, eval=TRUE}
+# importar dataset
+# alterar caminho para o vosso
+# importar dataset
+hour.dataset <- "D:/LEI/matematica/Metodos_Estatisticos/2122/ME_Trabalhos_2122/hour.csv"
+
+# Todos os alugueres todas as horas
+hour <- read.csv(file = hour.dataset)
+
+# Todos os alugueres entre as 7 às 18
+hour.day <- subset(hour, 6<hr & hr<19)
+
+# Todos os alugueres entre as 19 às 6
+hour.night <- subset(hour, hr>18 | hr<7)
+
+# Ver tabelas importadas no RStudio
+View(hour)
+```
+
+
+## **2. Dados em Estudo** {#desc-dados}
+
+A nossa análise irá contemplar a região Nordeste da Argélia (Bejaia) usando os métodos matemáticos sobre regressão linear simples.
+
+
+## **2.1. hour** {#hour}
+
+### **2.1.1 temp * cnt ** {#cnt-temp}
+
+#### **Diagrama de Dispersão** {#cnt-temp-diagrama_disp}
+
+```{r, evail = TRUE}
+plot(hour$cnt ~ hour$temp, main = "cnt*temp", xlab="temp",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+```
+
+O diagrama de dispersão do cnt com temp é de correlação linear positiva 
+porque a maior parte do valores correspondem a valores elevados da outra variável.
+
+#### **Coeficiente de Correlação Linear de Pearson** {#cnt-temp-pearson}
+
+O resultado do coeficient de correlação linear do cnt*temp usando o método de pearson:
+```{r, evail = TRUE}
+cor.test(hour$cnt,hour$temp, method="pearson")
+```
+
+O coeficiente de correlação linear deste problema é correlação linear positiva forte porque está entre 0.8 e 1 ou seja está perto do extremo de 1.
+
+#### **Reta de Regressão** {#cnt-temp-reta_regressao}
+
+```{r, evail = TRUE}
+plot(hour$temp,hour$cnt, main = "cnt*temp", xlab="temp",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+abline(lm(hour$cnt ~ hour$temp))
+```
+
+Na reta de regressão a correlação linear positiva porque como o b é positivo a relação entre X e Y é positiva.
+
+Conclui se que com a observação do diagrama de dispersão e o calculo do método de pearson que o diagrama de dispersão, existe uma correlação linear positiva forte entre as variáveis quantitativas cnt e temp .
+
+-------------------------------
+
+O valor da reta de regressão linear tem uma previsão de -0.3134 
+```{r, evail = TRUE}
+regressao <- lm(hour$temp ~ hour$cnt)
+regressao
+```
+
+
+temp variável dependente
+cnt variável independente
+
+```{r, evail = TRUE}
+summary(regressao)
+```
+
+Método dos mínimos quadrados é significativo porque tem um valor próximo de 1.
+
+#### **Previsões** {#cnt-temp-previsao}
+
+```{r, evail = TRUE}
+dados <- c(30,75)
+previsao <- -0.31342+1.27811*dados
+previsao
+```
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+[Diagrama de Dispersão](#cnt-temp-diagrama_disp)
+
+#### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
+
+```{r, echo=FALSE}
+
+residuos <- resid(regressao)
+residuos
+
+plot(resid(regressao) ~ predict(regressao), main="Diagrama Dispersão dos Resíduos", xlab="previsão", ylab = "resíduos", col="purple", pch=16)
+abline(0,0)
+
+```
+Os valores observados dos resíduos encontram-se entre os valores -2.5785 e 5.5050. No entanto, os valores encontram-se mais concentrados entre os valores -2 e 2.
+Assumindo que o ponto mais alto seja 5.5050 trata-se de um outlier, por se encontrar mais afastado.
+
+
+
+
+
+
+
+
+
+
