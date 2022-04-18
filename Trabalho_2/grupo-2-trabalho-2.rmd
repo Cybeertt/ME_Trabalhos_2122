@@ -1,5 +1,5 @@
 ---
-title: "grupo2-trabalho1"
+title: "grupo2-trabalho2"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
 output:
   html_document: default
@@ -35,7 +35,7 @@ View(hour)
 
 ## **2. Dados em Estudo** {#desc-dados}
 
-A nossa análise irá contemplar a região Nordeste da Argélia (Bejaia) usando os métodos matemáticos sobre regressão linear simples.
+A nossa análise irá contemplar os alugueres de bicicletas usando os métodos matemáticos sobre regressão linear simples.
 
 
 ## **2.1. hour** {#hour}
@@ -59,7 +59,7 @@ O resultado do coeficient de correlação linear do cnt*temp usando o método de
 cor.test(hour$cnt,hour$temp, method="pearson")
 ```
 
-O coeficiente de correlação linear deste problema é correlação linear positiva forte porque está entre 0.8 e 1 ou seja está perto do extremo de 1.
+O coeficiente de correlação linear deste problema é correlação linear positiva fraca porque está entre 0 e 0.5.
 
 #### **Reta de Regressão** {#cnt-temp-reta_regressao}
 
@@ -71,11 +71,11 @@ abline(lm(hour$cnt ~ hour$temp))
 
 Na reta de regressão a correlação linear positiva porque como o b é positivo a relação entre X e Y é positiva.
 
-Conclui se que com a observação do diagrama de dispersão e o calculo do método de pearson que o diagrama de dispersão, existe uma correlação linear positiva forte entre as variáveis quantitativas cnt e temp .
+Conclui se que com a observação do diagrama de dispersão e o calculo do método de pearson que o diagrama de dispersão, existe uma correlação linear positiva fraca entre as variáveis quantitativas cnt e temp .
 
 -------------------------------
 
-O valor da reta de regressão linear tem uma previsão de -0.3134 
+O valor da reta de regressão linear tem uma previsão de 0.4155758
 ```{r, evail = TRUE}
 regressao <- lm(hour$temp ~ hour$cnt)
 regressao
@@ -95,7 +95,7 @@ Método dos mínimos quadrados é significativo porque tem um valor próximo de 
 
 ```{r, evail = TRUE}
 dados <- c(30,75)
-previsao <- -0.31342+1.27811*dados
+previsao <- 0.4155758+0.0004297*dados
 previsao
 ```
 Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
@@ -112,8 +112,8 @@ plot(resid(regressao) ~ predict(regressao), main="Diagrama Dispersão dos Resíd
 abline(0,0)
 
 ```
-Os valores observados dos resíduos encontram-se entre os valores -2.5785 e 5.5050. No entanto, os valores encontram-se mais concentrados entre os valores -2 e 2.
-Assumindo que o ponto mais alto seja 5.5050 trata-se de um outlier, por se encontrar mais afastado.
+Os valores observados dos resíduos encontram-se entre os valores -0.53093 e 0.50102. No entanto, os valores encontram-se mais concentrados entre os valores -0.4 e 0.5.
+Assumindo que o ponto mais alto seja 0.50102 trata-se de um outlier, por se encontrar mais afastado.
 
 
 
