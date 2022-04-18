@@ -94,7 +94,7 @@ Método dos mínimos quadrados é significativo porque tem um valor próximo de 
 #### **Previsões** {#cnt-temp-previsao}
 
 ```{r, evail = TRUE}
-dados <- c(30,75)
+dados <- c(0.30,0.75)
 previsao <- 0.4155758+0.0004297*dados
 previsao
 ```
@@ -112,7 +112,7 @@ plot(resid(regressao) ~ predict(regressao), main="Diagrama Dispersão dos Resíd
 abline(0,0)
 
 ```
-Os valores observados dos resíduos encontram-se entre os valores -0.53093 e 0.50102. No entanto, os valores encontram-se mais concentrados entre os valores -0.4 e 0.5.
+Os valores observados dos resíduos encontram-se entre os valores -0.53093 e 0.50102. No entanto, os valores encontram-se mais concentrados entre os valores -0.4 e 0.4.
 Assumindo que o ponto mais alto seja 0.50102 trata-se de um outlier, por se encontrar mais afastado.
 
 
