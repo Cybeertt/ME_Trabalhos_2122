@@ -82,8 +82,8 @@ regressao
 ```
 
 
-temp variável dependente
-cnt variável independente
+temp variável independente
+cnt variável dependente
 
 ```{r, evail = TRUE}
 summary(regressao)
