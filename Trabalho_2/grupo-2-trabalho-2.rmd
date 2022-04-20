@@ -117,8 +117,160 @@ Assumindo que o ponto mais alto seja 0.50102 trata-se de um outlier, por se enco
 
 
 
+## **2.2. hour day** {#hour}
+
+### **2.2.1 temp * cnt ** {#cnt-temp}
+
+#### **Diagrama de Dispers?o** {#cnt-temp-diagrama_disp}
+
+```{r, evail = TRUE}
+plot(hour.day$cnt ~ hour.day$temp, main = "cnt*temp day", xlab="temp day",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+```
+
+O diagrama de dispersão do cnt com temp é de correlação linear positiva 
+porque a maior parte do valores correspondem a valores elevados da outra variável.
+
+#### **Coeficiente de Correlação Linear de Pearson** {#cnt-temp-pearson}
+
+O resultado do coeficient de correlação linear do cnt*temp usando o método de pearson:
+```{r, evail = TRUE}
+cor.test(hour.day$cnt,hour.day$temp, method="pearson")
+```
+
+O coeficiente de correlação linear deste problema é correlação linear positiva fraca porque está entre 0 e 0.5.
+
+#### **Reta de Regressão** {#cnt-temp-reta_regressao}
+
+```{r, evail = TRUE}
+plot(hour.day$temp,hour.day$cnt, main = "cnt*temp day", xlab="temp day",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+abline(lm(hour.day$cnt ~ hour.day$temp))
+```
+
+Na reta de regressão a correlação linear positiva porque como o b é positivo a relação entre X e Y é positiva.
+
+Conclui se que com a observação do diagrama de dispersão e o calculo do método de pearson que o diagrama de dispersão, existe uma correlação linear positiva fraca entre as variáveis quantitativas cnt e temp .
+
+-------------------------------
+
+O valor da reta de regressão linear tem uma previsão de 0.4116067
+```{r, evail = TRUE}
+regressao_day <- lm(hour.day$temp ~ hour.day$cnt)
+regressao_day
+```
 
 
+temp variável independente
+cnt variável dependente
+
+```{r, evail = TRUE}
+summary(regressao_day)
+```
+
+Método dos mínimos quadrados é significativo porque tem um valor próximo de 1.
+
+#### **Previsões** {#cnt-temp-previsao}
+
+```{r, evail = TRUE}
+dados <- c(0.30,0.75)
+previsao_day <- 0.4048953+0.0004228*dados
+previsao_day
+```
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+[Diagrama de Dispersão](#cnt-temp-diagrama_disp)
+
+#### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
+
+```{r, echo=FALSE}
+
+residuos_day <- resid(regressao_day)
+residuos_day
+
+plot(resid(regressao_day) ~ predict(regressao_day), main="Diagrama Dispersão dos Resíduos", xlab="previsão", ylab = "resíduos", col="purple", pch=16)
+abline(0,0)
+
+```
+Os valores observados dos resíduos encontram-se entre os valores -0.51808 e 0.51240. No entanto, os valores encontram-se mais concentrados entre os valores -0.4 e 0.5.
+Assumindo que o ponto mais alto seja 0.51240 trata-se de um outlier, por se encontrar mais afastado.
+
+
+## **2.3. hour night** {#hour}
+
+### **2.3.1 temp * cnt ** {#cnt-temp}
+
+#### **Diagrama de Dispersão** {#cnt-temp-diagrama_disp}
+
+```{r, evail = TRUE}
+plot(hour.night$cnt ~ hour.night$temp, main = "cnt*temp", xlab="temp",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+```
+
+O diagrama de dispersão do cnt com temp é de correlação linear positiva 
+porque a maior parte do valores correspondem a valores elevados da outra variável.
+
+#### **Coeficiente de Correlação Linear de Pearson** {#cnt-temp-pearson}
+
+O resultado do coeficient de correlação linear do cnt*temp usando o método de pearson:
+```{r, evail = TRUE}
+cor.test(hour.night$cnt,hour.night$temp, method="pearson")
+```
+
+O coeficiente de correlação linear deste problema é correlação linear positiva fraca porque está entre 0 e 0.5.
+
+#### **Reta de Regressão** {#cnt-temp-reta_regressao}
+
+```{r, evail = TRUE}
+plot(hour.night$temp,hour.night$cnt, main = "cnt*temp", xlab="temp",
+     ylab="cnt", col="purple", pch=16, cex=1.1)
+abline(lm(hour.night$cnt ~ hour.night$temp))
+```
+
+Na reta de regressão a correlação linear positiva porque como o b é positivo a relação entre X e Y é positiva.
+
+Conclui se que com a observação do diagrama de dispersão e o calculo do método de pearson que o diagrama de dispersão, existe uma correlação linear positiva fraca entre as variáveis quantitativas cnt e temp .
+
+-------------------------------
+
+O valor da reta de regressão linear tem uma previsão de 0.4202116
+```{r, evail = TRUE}
+regressao_night <- lm(hour.night$temp ~ hour.night$cnt)
+regressao_night
+```
+
+
+temp variável independente
+cnt variável dependente
+
+```{r, evail = TRUE}
+summary(regressao_night)
+```
+
+Método dos mínimos quadrados é significativo porque tem um valor próximo de 1.
+
+#### **Previsões** {#cnt-temp-previsao}
+
+```{r, evail = TRUE}
+dados <- c(30,75)
+previsao_night <- 0.4102356+0.0006163*dados
+previsao_night
+```
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+[Diagrama de Dispersão](#cnt-temp-diagrama_disp)
+
+#### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
+
+```{r, echo=FALSE}
+
+residuos_night <- resid(regressao_night)
+residuos_night
+
+plot(resid(regressao_night) ~ predict(regressao_night), main="Diagrama Dispersão dos Resíduos", xlab="previsão", ylab = "resíduos", col="purple", pch=16)
+abline(0,0)
+
+```
+Os valores observados dos resíduos encontram-se entre os valores -0.42814 e 0.38018. No entanto, os valores encontram-se mais concentrados entre os valores -0.4 e 0.4.
+Assumindo que o ponto mais alto seja 0.38018 trata-se de um outlier, por se encontrar mais afastado.
 
 
 
