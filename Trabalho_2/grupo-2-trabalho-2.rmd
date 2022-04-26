@@ -2,8 +2,8 @@
 title: "grupo2-trabalho2"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
 output:
-  html_document: default
   word_document: default
+  html_document: default
 ---
 
 
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # importar dataset
 # alterar caminho para o vosso
 # importar dataset
-hour.dataset <- "D:/LEI/matematica/Metodos_Estatisticos/2122/ME_Trabalhos_2122/hour.csv"
+hour.dataset <- "C:/Users/andre/Desktop/ME/ME_Trabalhos_2122/hour.csv"
 
 # Todos os alugueres todas as horas
 hour <- read.csv(file = hour.dataset)
@@ -98,7 +98,7 @@ dados <- c(0.30,0.75)
 previsao <- 0.4155758+0.0004297*dados
 previsao
 ```
-Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos. Apesar das previsões obtidas estarem dentro do intervalo da temperatura, não se pode confiar muito nos resultados/previsões pois a correlação linear do modelo é fraca.
 [Diagrama de Dispersão](#cnt-temp-diagrama_disp)
 
 #### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
@@ -177,7 +177,7 @@ dados <- c(0.30,0.75)
 previsao_day <- 0.4048953+0.0004228*dados
 previsao_day
 ```
-Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos. Apesar das previsões obtidas estarem dentro do intervalo da temperatura, não se pode confiar muito nos resultados/previsões pois a correlação linear do modelo é fraca.
 [Diagrama de Dispersão](#cnt-temp-diagrama_disp)
 
 #### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
@@ -255,7 +255,7 @@ dados <- c(30,75)
 previsao_night <- 0.4102356+0.0006163*dados
 previsao_night
 ```
-Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos.
+Perante os valores obtidos conclui-se que os valores tendem a crescer consoante o aumento do valor de x, afastando a hipotese de obter valores absurdos. Apesar das previsões obtidas estarem dentro do intervalo da temperatura, não se pode confiar muito nos resultados/previsões pois a correlação linear do modelo é fraca.
 [Diagrama de Dispersão](#cnt-temp-diagrama_disp)
 
 #### **Diagrama de Dispersão dos Residuos** {#cnt-temp-residuos}
