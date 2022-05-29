@@ -1,22 +1,11 @@
 ---
-title: 'Trabalho de Grupo III'
+title: "grupo2-trabalho3"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
-author: 
-- Grupo 1, Turma SW-05
-- name: N.200221146 Beatriz Simões
-  affiliation: IPS EST Setúbal, LEI, ramo gestão
-- name: N.150221081 Daniela Sineiro
-  affiliation: IPS EST Setúbal, LEI, ramo software
-- name: N.200221149 Rafael Palma
-  affiliation: IPS EST Setúbal, LEI, ramo software
-date: "`r format(Sys.time(), '%d %B %Y')`"
-lang: [BCP 47]
-description: 'Observação dos dados e aplicar cálculos de ???, comentando observações sobre alguns resultados'
-output: 
+output:
   word_document: default
   html_document: default
-  pdf_document: default
-...
+---
+
 
 ```{r setup, include = F}
 knitr::opts_chunk$set(echo = F)
@@ -59,7 +48,7 @@ O dataset é composto oficialmente por 12 variáveis, ao qual a variável Date e
 - Fine Fuel Moisture Code (FFMC)
 - Duff Moisture Code (cnt)
 - Drought Code (DC)
-- Initial Spread Index (atemp)
+- Initial Spread Index (temp)
 - templdup Index (temp)
 - Fire Weather Index (FWI)
 - Classes
@@ -93,10 +82,10 @@ hour.dataset <- "D:/LEI/matematica/Metodos_Estatisticos/2122/ME_Trabalhos_2122/h
 hour <- read.csv(file = hour.dataset)
 
 # Todos os alugueres entre as 7 às 18
-hour.day <- subset(hour, 6<atemp & atemp<19)
+hour.day <- subset(hour, 6<hr & hr<19)
 
 # Todos os alugueres entre as 19 às 6
-hour.night <- subset(hour, atemp>18 | atemp<7)
+hour.night <- subset(hour, hr>18 | hr<7)
 
 # Ver tabelas importadas no RStudio
 View(hour)
@@ -108,7 +97,7 @@ A nossa análise irá contemplar a região Nordeste da Argélia (Bejaia) usando 
 
 ### **Escolha da Variável** {#variavel}
 
-A variável em estudo é a *Initial Spread Index* (atemp) e é uma variável contínua.
+A variável em estudo é a *Initial Spread Index* (temp) e é uma variável contínua.
 
 ### **Tabela de Frequência e Histograma** {#tabela-hist}
 
@@ -117,97 +106,97 @@ Para a escolha da variável, fez-se os cálculos necessários para a criação d
 ```{r, evail = T}
 # min max
 cat("Mínimo\n")
-hour.atemp.min <- min(hour$atemp)
-hour.atemp.min
+hour.temp.min <- min(hour$temp)
+hour.temp.min
 
 cat("\nMáximo\n")
-hour.atemp.max <- max(hour$atemp)
-hour.atemp.max
+hour.temp.max <- max(hour$temp)
+hour.temp.max
 
 # formula de sturges
 cat("\nNúmero de classes\n")
-hour.atemp.sturges.nclass <- sturges(hour$atemp)
-hour.atemp.sturges.nclass
+hour.temp.sturges.nclass <- sturges(hour$temp)
+hour.temp.sturges.nclass
 
 # amplitude da classe
 cat("\nAmplitude da classe\n")
-hour.atemp.sturges.amplitude <- amplitude(hour$atemp)
-hour.atemp.sturges.amplitude
+hour.temp.sturges.amplitude <- amplitude(hour$temp)
+hour.temp.sturges.amplitude
 
 # tabela de frequencias
 cat("\nClasses\n")
-hour.atemp.sturges.breaks <- seq(hour.atemp.min, hour.atemp.max, hour.atemp.sturges.amplitude)
-hour.atemp.sturges.breaks
+hour.temp.sturges.breaks <- seq(hour.temp.min, hour.temp.max, hour.temp.sturges.amplitude)
+hour.temp.sturges.breaks
 
 cat("\nTabela de frequências")
-table(cut(hour$atemp, breaks=hour.atemp.sturges.breaks))
+table(cut(hour$temp, breaks=hour.temp.sturges.breaks))
 ```
 
-A tabela atual só regista 118 valores da amostra, embora o número total de valores são 122. Esta anómalia só afeta quando colocamos os dados sob a forma de tabela no ambiente R Studio, sendo que os cálculos realizados contabilizam os 122 valores da amostra.
+A tabela atual só regista 17379 valores da amostra.
 
-Após a criação da tabela de frequências, calculou-se a média e variância da variável atemp, e de seguida criou-se o seu histograma, de forma a ser possível tirar conclusões.
+Após a criação da tabela de frequências, calculou-se a média e variância da variável temp, e de seguida criou-se o seu histograma, de forma a ser possível tirar conclusões.
 
 ```{r, eval=TRUE}
 # media e variancia
 cat("\nMédia\n")
-x <- mean(hour$atemp)
+x <- mean(hour$temp)
 x
 
 cat("\nVariância\n")
-s <- var(hour$atemp)
+s <- var(hour$temp)
 s
 
 # histograma
-hist(hour$atemp, main="Histograma atemp", xlab="atemp",  ylab="Indice", nclass=hour.atemp.sturges.nclass)
+hist(hour$temp, main="Histograma temp", xlab="temp",  ylab="Indice", nclass=hour.temp.sturges.nclass)
 ```
 
-Através do histograma, conseguimos verificar graficamente que a variável parece ter uma distritempção Exponêncial, conseguindo comprovar de acordo com a proposição de que a variância é o quadrado do valor esperado.
+Através do histograma, conseguimos verificar graficamente que a variável parece ter uma distribuição Normal, conseguindo comprovar de acordo com a proposição de que a variância é o quadrado do valor esperado.
 
-Média = 3.655738
-Variância = 9.131083
+Média = 0.4969872
+Variância = 0.03707786
 
 Embora estes valores não sejam exatos, podem ser considerados corretos por serem apróximados.
 
-A nossa distritempção Exponêncial contabiliza o tempo do índice de alastramento inicial de fogo (atemp), em dias (122) num periodo de 4 meses, em Bejaia (nordeste) da floresta da Argélia.
+A nossa distribuição Normal contabiliza a temperatura (temp), em horas (17379) num periodo de 2 anos, num aluguer de bicicletas.
 
 ### **Hipóteses** {#hipoteses}
 
-H0 − Os dados provêm da população com a distritempção exponencial.
+H0 − Os dados provêm da população com a distribuição Normal.
 
-H1 − Os dados não provêm da população com a distritempção exponencial.
+H1 − Os dados não provêm da população com a distribuição Normal.
 
 ```{r, eval = TRUE}
-var(hour$atemp)
-mean(hour$atemp)
-chisq.test(table(hour$atemp))
-qchisq(.10, df=66)
+var(hour$temp)
+mean(hour$temp)
+chisq.test(table(hour$temp))
+qchisq(.10, df=49)
 ``` 
 
-No nível de significância de 10% tem como 0.9375 > 0.10 então não se rejeita a hipótese nula (H0).
+No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma distritempsão Exponencial.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
 
 ```{r, eval = TRUE}
-var(hour.day$atemp)
-mean(hour.day$atemp)
-chisq.test(table(hour.day$atemp))
-qchisq(.10, df=40)
+var(hour.day$temp)
+mean(hour.day$temp)
+chisq.test(table(hour.day$temp))
+qchisq(.10, df=49)
 ```
 
-No nível de significância de 10% tem como 0.9894 >  0.10 então não se rejeita a hipótese nula (H0).
+No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma distritempsão Exponencial.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
 
 ```{r, eval = TRUE}
 #df: graus de liberdade
-var(hour.night$atemp)
-mean(hour.night$atemp)
-chisq.test(table(hour.night$atemp))
-qchisq(.10, df=27)
+var(hour.night$temp)
+mean(hour.night$temp)
+chisq.test(table(hour.night$temp))
+qchisq(.10, df=45)
 ```
-No nível de significância de 10% tem como 0.8261 > 0.10 então não se rejeita a hipótese nula (H0). 
+No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma distritempsão Exponencial.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
 
 
 ### **Regressão Linear Simples** {#regressao}
@@ -238,7 +227,7 @@ table(sort(residuos3))
 
 Os resíduos seguem uma distritempção normal porque é simétrica relativamente à recta x = μ atinge um máximo absoluto no ponto x = μ, tem dois pontos de inflexão em x = μ +- σ e que o eixo OX é uma assímptota horizontal ao seu gráfico. 
 ```{r, eval = TRUE}
-hist(residuos, main="Residuos", xlab="Residuos", ylab="Indice")
+hist(residuos, main="Residuos", xlab="Percentagem", ylab="Count Residuos")
 ``` 
 O valor entre 5 e 6 é considerado um outlier porque não sabemos bem sobre os dados de forma a poder remover dos dados oficiais da regressao linear. 
 
@@ -251,10 +240,10 @@ ks.test(hour$temp, hour$cnt)
 rc =1.36  / sqrt(length(residuos))
 rc
 ``` 
-Dobs = 0.12295 e RC=[0.1231286,+∞]
-Como 0.12295 não pertence à Região Critíca então não se rejeita a hipótese H0.
+Dobs = 0.99994 e RC=[0.01031636,+∞]
+Como 0.99994 pertence à Região Critíca então rejeita se a hipótese H0.
 
-Como valor-p= 0.315 > 0.05 = α então não se rejeita a hipotese nula.
+Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
 
 ```{r, eval = TRUE}
 
@@ -262,21 +251,21 @@ ks.test(hour.day$temp, hour.day$cnt)
 rc =1.36  / sqrt(length(residuos2))
 rc
 ```
-Dobs = 0.20339 e RC=[0.1770569,+∞]
-Como 0.20339 pertence à Região Critíca então rejeita a hipótese H0.
-Como valor-p= 0.1741 > 0.05 = α então não se rejeita a hipotese nula
+Dobs = 0.99989 e RC=[0.1770569,+∞]
+Como 0.99989 pertence à Região Critíca então rejeita se a hipótese H0.
 
-Os resultados na região critica contradizem os resultados com o Valor-P. Esta contradição pode ser devido a que durante o cálculo da Região Crítica não se encontram tabulados porque n > 40 resultando um valor aproximado. 
-Como Valor-P é um valor exato, ao qual consideramos fiável, concluindo que a H0 de não é rejeitada.
+Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
+
+Como Valor-P é um valor exato, ao qual consideramos fiável, concluindo que a H0 é rejeitada.
 
 ```{r, eval = TRUE}
 ks.test(hour.night$temp, hour.night$cnt)
 rc =1.36  / sqrt(length(residuos3))
 rc
 ```
-Dobs = 0.12698 e RC=[0.1713439,+∞]
-Como 0.12698 pertence à Região Critíca então rejeita a hipótese H0.
-Como valor-p= 0.12698 > 0.05 = α então não se rejeita a hipotese nula.
+Dobs = 1 e RC=[0.1713439,+∞]
+Como 1 pertence à Região Critíca então rejeita a hipótese H0.
+Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
 
 ******
 
