@@ -147,7 +147,7 @@ s <- var(hour$temp)
 s
 
 # histograma
-hist(hour$temp, main="Histograma temp", xlab="temp",  ylab="Indice", nclass=hour.temp.sturges.nclass)
+hist(hour$temp, main="Histograma temp", xlab="temp",  ylab="Count temperature", nclass=hour.temp.sturges.nclass)
 ```
 
 Através do histograma, conseguimos verificar graficamente que a variável parece ter uma distribuição Normal, conseguindo comprovar de acordo com a proposição de que a variância é o quadrado do valor esperado.
