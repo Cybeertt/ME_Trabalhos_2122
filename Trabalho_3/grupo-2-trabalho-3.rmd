@@ -97,7 +97,7 @@ A nossa análise irá contemplar a região Nordeste da Argélia (Bejaia) usando 
 
 ### **Escolha da Variável** {#variavel}
 
-A variável em estudo é a *Initial Spread Index* (temp) e é uma variável contínua.
+A variável em estudo é a temperatura (temp) e é uma variável contínua.
 
 ### **Tabela de Frequência e Histograma** {#tabela-hist}
 
@@ -174,7 +174,7 @@ qchisq(.10, df=49)
 
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
 
 ```{r, eval = TRUE}
 var(hour.day$temp)
@@ -201,7 +201,7 @@ Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se qu
 
 ### **Regressão Linear Simples** {#regressao}
 
-O modelo de correlação linear estudado no trabalho anterior, entre as variáveis contínuas cnt (independente) e temp (dependente), comprova ter uma forte correlação linear, deste modo, os residuos por norma deverão de ter uma distritempção Normal.
+O modelo de correlação linear estudado no trabalho anterior, entre as variáveis contínuas cnt (independente) e temp (dependente), comprova ter uma forte correlação linear, deste modo, os residuos por norma deverão de ter uma distribuição Normal.
 
 ```{r, eval = TRUE}
 regressao <- lm(hour$temp ~ hour$cnt)
@@ -218,10 +218,10 @@ residuos3 <- resid(regressao3)
 cat("\nTabela de frequências")
 table(sort(residuos))
 
-cat("\nTabela de frequências Com Fogo")
+cat("\nTabela de frequências de Dia")
 table(sort(residuos2))
 
-cat("\nTabela de frequências Não Fogo")
+cat("\nTabela de frequências de Noite")
 table(sort(residuos3))
 ```
 
@@ -266,6 +266,40 @@ rc
 Dobs = 1 e RC=[0.1713439,+∞]
 Como 1 pertence à Região Critíca então rejeita a hipótese H0.
 Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
+
+
+### **Hipóteses** {#hipoteses}
+
+H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
+
+H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
+
+```{r, eval = TRUE}
+chisq.test(table(hour$temp, hour$cnt))
+qchisq(.01, df=42532)
+``` 
+
+
+### **Hipóteses** {#hipoteses}
+
+H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
+
+H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
+
+```{r, eval = TRUE}
+chisq.test(table(hour.day$temp, hour.day$cnt))
+qchisq(.01, df=42385)
+``` 
+
+### **Hipóteses** {#hipoteses}
+
+H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
+
+H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
+```{r, eval = TRUE}
+chisq.test(table(hour.night$temp, hour.night$cnt))
+qchisq(.01, df=24930)
+``` 
 
 ******
 
