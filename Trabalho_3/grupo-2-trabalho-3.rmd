@@ -279,6 +279,9 @@ chisq.test(table(hour$temp, hour$cnt))
 qchisq(.01, df=42532)
 ``` 
 
+No nível de significância de 1% tem como 2.2e-16 < 0.01 então rejeita-se a hipótese nula (H0).
+
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
 ### **Hipóteses** {#hipoteses}
 
@@ -291,6 +294,10 @@ chisq.test(table(hour.day$temp, hour.day$cnt))
 qchisq(.01, df=42385)
 ``` 
 
+No nível de significância de 1% tem como 0.2564 > 0.01 então não se rejeita a hipótese nula (H0).
+
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
+
 ### **Hipóteses** {#hipoteses}
 
 H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
@@ -300,6 +307,10 @@ H1 − Os dados não provêm da população com a existencia associada entre as 
 chisq.test(table(hour.night$temp, hour.night$cnt))
 qchisq(.01, df=24930)
 ``` 
+
+No nível de significância de 1% tem como 2.2e-16 < 0.01 então rejeita-se a hipótese nula (H0).
+
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
 ******
 
