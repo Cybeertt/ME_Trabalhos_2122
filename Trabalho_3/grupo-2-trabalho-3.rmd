@@ -169,7 +169,7 @@ H1 − Os dados não provêm da população com a distribuição Normal.
 var(hour$temp)
 mean(hour$temp)
 chisq.test(table(hour$temp))
-qchisq(.10, df=49)
+qchisq(.10, df=5)
 ``` 
 
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
@@ -185,7 +185,7 @@ qchisq(.10, df=49)
 
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma  distribuição Normal.
 
 ```{r, eval = TRUE}
 #df: graus de liberdade
@@ -196,7 +196,7 @@ qchisq(.10, df=45)
 ```
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma não distribuição Normal.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
 
 
 ### **Regressão Linear Simples** {#regressao}
@@ -225,11 +225,11 @@ cat("\nTabela de frequências de Noite")
 table(sort(residuos3))
 ```
 
-Os resíduos seguem uma distritempção normal porque é simétrica relativamente à recta x = μ atinge um máximo absoluto no ponto x = μ, tem dois pontos de inflexão em x = μ +- σ e que o eixo OX é uma assímptota horizontal ao seu gráfico. 
+Os resíduos seguem uma distribuição normal porque é simétrica relativamente à recta x = μ atinge um máximo absoluto no ponto x = μ, tem dois pontos de inflexão em x = μ +- σ e que o eixo OX é uma assímptota horizontal ao seu gráfico. 
 ```{r, eval = TRUE}
 hist(residuos, main="Residuos", xlab="Percentagem", ylab="Count Residuos")
 ``` 
-O valor entre 5 e 6 é considerado um outlier porque não sabemos bem sobre os dados de forma a poder remover dos dados oficiais da regressao linear. 
+
 
 ### **Testes de Ajustamento** {#testes-ajustamento}
 
@@ -251,7 +251,7 @@ ks.test(hour.day$temp, hour.day$cnt)
 rc =1.36  / sqrt(length(residuos2))
 rc
 ```
-Dobs = 0.99989 e RC=[0.1770569,+∞]
+Dobs = 0.99989 e RC=[0.01454899,+∞]
 Como 0.99989 pertence à Região Critíca então rejeita se a hipótese H0.
 
 Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
@@ -263,20 +263,58 @@ ks.test(hour.night$temp, hour.night$cnt)
 rc =1.36  / sqrt(length(residuos3))
 rc
 ```
-Dobs = 1 e RC=[0.1713439,+∞]
+Dobs = 1 e RC=[0.01463042,+∞]
 Como 1 pertence à Região Critíca então rejeita a hipótese H0.
 Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
 
 
 ### **Hipóteses** {#hipoteses}
 
-H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
+H0 − Os dados provêm da população com a existência associada entre as variáveis selecionadas.
 
 H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
 
 ```{r, eval = TRUE}
-chisq.test(table(hour$temp, hour$cnt))
-qchisq(.01, df=42532)
+
+dim(hour)
+#(tabela.1 <- table(hour))
+#dimnames(table(hour)) = list(yr=c("Não","Sim"),
+#                          workingday=c("Não","Sim"))
+#tabela.1
+
+# formula de sturges
+cat("\nNúmero de classes\n")
+hour.atemp.sturges.nclass <- sturges(hour$atemp)
+hour.atemp.sturges.nclass
+
+# amplitude da classe
+cat("\nAmplitude da classe\n")
+hour.atemp.sturges.amplitude <- amplitude(hour$atemp)
+hour.atemp.sturges.amplitude
+
+
+
+
+muitofrio <- subset(hour, 0<=atemp & atemp<0.2)
+length(muitofrio)
+
+dimnames(mgn_my) = list(atemp=c("muito frio","frio","neutro","calor","muito calor"),
+                          windspeed=c("muito vento","vento","pouco vento","neutro","sem vento"))
+
+hourdaynight <- chisq.test(table(hour))
+hourdaynight$statistic
+hourdaynight$parameter # graus de liberdade
+hourdaynight$p.value   # valor-p
+#hourdaynight$observed  # Oi = frequências Observadas
+#hourdaynight$expected 
+#qchisq(.01, df=42532)
+
+alpha <- 0.01
+# a região crítica começa:
+qchisq(1-alpha,hourdaynight$parameter)
+
+hourdaynight$statistic
+hourdaynight$p.value 
 ``` 
 
 No nível de significância de 1% tem como 2.2e-16 < 0.01 então rejeita-se a hipótese nula (H0).
