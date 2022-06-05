@@ -7,51 +7,11 @@ output:
 ---
 
 
-```{r setup, include = F}
-knitr::opts_chunk$set(echo = F)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
-******
 
-## **Índice**
 
-+ [1. Descrição dos Dados](#desc)
-+ [2. Dados em Estudo](#desc-dados)
-  + [Escolha da Variável](#variavel)
-  + [Tabela de Frequência e Histograma](#tabela-hist)
-  + [Hipóteses](#hipoteses)
-  + [Regressão Linear Simples](#regressao)
-  + [Testes de Ajustamento](#testes-ajustamento)
-    
-+ [3. Referências](#ref)
- + [3.1 Documentação Não Eletrónica](#ref-offline)
-  + [3.2 Documentação Eletrónica](#ref-online)
-
-******
-
-## **1. Descrição dos Dados** {#desc}
-
-```{r, eval = T}
-# importar
-library(knitr) #R Markdown
-library(here) # nice pathing
-library(readr) # read files
-library(Rcmdr) # R Commander
-```
-O presente trabalho tem o intuito de realizar uma análise descritiva ao dataset Algerian Forest Fire, disponível em https://archive.ics.uci.edu/ml/datasets/Algerian+Forest+Fires+Dataset++. Este dataset contém 244 instâncias observadas entre Junho e Setembro de 2012, e estas encontram-se agrupadas em duas regiões da Argélia, Nordeste (Bejaia) e Noroeste (Sidi Bel-abbes).
-O dataset é composto oficialmente por 12 variáveis, ao qual a variável Date encontra-se repartida em três colunas distintas, disponíveis no ficheiro csv.
- 
-- Date
-- Temperature (Temp)
-- Relative Humidity (RH)
-- Wind Speed (Ws)
-- Rain
-- Fine Fuel Moisture Code (FFMC)
-- Duff Moisture Code (cnt)
-- Drought Code (DC)
-- Initial Spread Index (temp)
-- templdup Index (temp)
-- Fire Weather Index (FWI)
-- Classes
 
 ```{r, eval = T}
 # Funcoes
@@ -293,33 +253,22 @@ hour.atemp.sturges.amplitude <- amplitude(hour$atemp)
 hour.atemp.sturges.amplitude
 
 
+hourdaynight <- chisq.test(table(hour$yr, hour$workingday))
+hourdaynight$observed  # Oi = frequências Observadas
+hourdaynight$expected 
 
-
-muitofrio <- subset(hour, 0<=atemp & atemp<0.2)
-length(muitofrio)
-
-dimnames(mgn_my) = list(atemp=c("muito frio","frio","neutro","calor","muito calor"),
-                          windspeed=c("muito vento","vento","pouco vento","neutro","sem vento"))
-
-hourdaynight <- chisq.test(table(hour))
 hourdaynight$statistic
 hourdaynight$parameter # graus de liberdade
+cat("\nP Value\n")
 hourdaynight$p.value   # valor-p
-#hourdaynight$observed  # Oi = frequências Observadas
-#hourdaynight$expected 
+
+#
 #qchisq(.01, df=42532)
-
-alpha <- 0.01
-# a região crítica começa:
-qchisq(1-alpha,hourdaynight$parameter)
-
-hourdaynight$statistic
-hourdaynight$p.value 
 ``` 
 
-No nível de significância de 1% tem como 2.2e-16 < 0.01 então rejeita-se a hipótese nula (H0).
+No nível de significância de 1% tem como 0.7846998 > 0.01 então não se rejeita a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
 
 ### **Hipóteses** {#hipoteses}
 
@@ -328,27 +277,37 @@ H0 − Os dados provêm da população com a existencia associada entre as vari�
 H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
 
 ```{r, eval = TRUE}
-chisq.test(table(hour.day$temp, hour.day$cnt))
-qchisq(.01, df=42385)
+hourday <- chisq.test(table(hour.day$yr, hour.day$workingday))
+hourday$observed  # Oi = frequências Observadas
+hourday$expected 
+
+hourday$statistic
+hourday$parameter # graus de liberdade
+hourday$p.value   # valor-p
 ``` 
 
-No nível de significância de 1% tem como 0.2564 > 0.01 então não se rejeita a hipótese nula (H0).
+No nível de significância de 1% tem como 0.839166 > 0.01 então não se rejeita a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
-
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
 ### **Hipóteses** {#hipoteses}
 
 H0 − Os dados provêm da população com a existencia associada entre as variáveis selecionadas.
 
 H1 − Os dados não provêm da população com a existencia associada entre as variáveis selecionadas.
 ```{r, eval = TRUE}
-chisq.test(table(hour.night$temp, hour.night$cnt))
-qchisq(.01, df=24930)
+
+hournight <- chisq.test(table(hour.night$yr, hour.night$workingday))
+hournight$observed  # Oi = frequências Observadas
+hournight$expected 
+
+hournight$statistic
+hournight$parameter # graus de liberdade
+hournight$p.value   # valor-p
 ``` 
 
-No nível de significância de 1% tem como 2.2e-16 < 0.01 então rejeita-se a hipótese nula (H0).
+No nível de significância de 1% tem como 0.8728924 > 0.01 então não se rejeita a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
 
 ******
 
