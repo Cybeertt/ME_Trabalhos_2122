@@ -267,6 +267,7 @@ cat("\n Tabela de contigência dos dados esperados\n")
 hourdaynight$expected 
 cat("\nQobs\n")
 hourdaynight$statistic
+cat("Graus de liberdade")
 hourdaynight$parameter # graus de liberdade
 cat("\nP Value\n")
 hourdaynight$p.value   # valor-p
@@ -279,7 +280,6 @@ No nível de significância de 1% tem como 1.162626e-31 < 0.01 então rejeita-se
 
 Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
-Como linhas temos os anos em que ocorreram os alugueres em que 2011 = 0 e 2012 = 1 e temos as colunas que correspondem a uma determinada hora de trabalho em que 0 = "Não houve trabalho" e 1 = "Houve trabalho". Haver ou não trabalho tem haver com as 8760 horas de 2011 e 8784 horas de 2012
 
 ### **Hipóteses** {#hipoteses}
 
@@ -288,20 +288,28 @@ H0 − As variáveis são independentes
 H1 − As variáveis não são independentes
 
 ```{r, eval = TRUE}
-hourday <- chisq.test(table(hour.day$yr, hour.day$workingday))
+(tabela.2 <- table(hour.day$season,hour.day$weathersit))
+dimnames(tabela.2) = list(season=c("Inverno","Primavera", "Verão", "Outono"),
+                        weathersit=c("Céu Limpo","Nublado", "Aguaceiros","Tempestade"))
+
+hourday <- chisq.test(tabela.2)
+cat("\n Tabela de contigência dos dados observados\n")
 hourday$observed  # Oi = frequências Observadas
+
+cat("\n Tabela de contigência dos dados esperados\n")
 hourday$expected 
 cat("\nQobs\n")
 hourday$statistic
+cat("\nGraus de liberdade\n")
 hourday$parameter # graus de liberdade
+cat("\nP Value\n")
 hourday$p.value   # valor-p
+
 ``` 
 
-No nível de significância de 1% tem como 0.839166 > 0.01 então não se rejeita a hipótese nula (H0).
+No nível de significância de 1% tem como 2.154533e-16 < 0.01 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
-
-Como linhas temos os anos em que ocorreram os alugueres em que 2011 = 0 e 2012 = 1 e temos as colunas que correspondem a uma determinada hora de trabalho em que 0 = "Não houve trabalho" e 1 = "Houve trabalho". Haver ou não trabalho tem haver com as 4380 horas de 2011 e 4392 horas de 2012
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
 
 ### **Hipóteses** {#hipoteses}
@@ -311,20 +319,27 @@ H0 − As variáveis são independentes
 H1 − As variáveis não são independentes
 ```{r, eval = TRUE}
 
-hournight <- chisq.test(table(hour.night$yr, hour.night$workingday))
-hournight$observed  # Oi = frequências Observadas
-hournight$expected 
+(tabela.3 <- table(hour.night$season,hour.night$weathersit))
+dimnames(tabela.3) = list(season=c("Inverno","Primavera", "Verão", "Outono"),
+                        weathersit=c("Céu Limpo","Nublado", "Aguaceiros","Tempestade"))
 
+hournight <- chisq.test(tabela.3)
+cat("\n Tabela de contigência dos dados observados\n")
+hournight$observed  # Oi = frequências Observadas
+
+cat("\n Tabela de contigência dos dados esperados\n")
+hournight$expected 
+cat("\nQobs\n")
 hournight$statistic
+cat("\nGraus de liberdade\n")
 hournight$parameter # graus de liberdade
+cat("\nP Value\n")
 hournight$p.value   # valor-p
 ``` 
 
-No nível de significância de 1% tem como 0.8728924 > 0.01 então não se rejeita a hipótese nula (H0).
+No nível de significância de 1% tem como 1.532833e-14 < 0.01 então rejeita-se a hipótese nula (H0).
 
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha seguem uma existencia associada entre as variáveis selecionadas.
-
-Como linhas temos os anos em que ocorreram os alugueres em que 2011 = 0 e 2012 = 1 e temos as colunas que correspondem a uma determinada hora de trabalho em que 0 = "Não houve trabalho" e 1 = "Houve trabalho". Haver ou não trabalho tem haver com as 4380 horas de 2011 e 4392 horas de 2012
+Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
 ******
 
