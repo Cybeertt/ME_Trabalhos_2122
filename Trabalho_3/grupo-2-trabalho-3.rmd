@@ -55,7 +55,7 @@ View(hour)
 
 ## **2. Dados em Estudo** {#desc-dados}
 
-A nossa análise irá contemplar a região Nordeste da Argélia (Bejaia) usando os métodos matemáticos sobre regressão linear simples.
+A nossa análise irá contemplar o aluguer de bicicletas em Washington usando os métodos matemáticos sobre regressão linear simples.
 
 ### **Escolha da Variável** {#variavel}
 
