@@ -2,8 +2,8 @@
 title: "grupo2-trabalho3"
 subtitle: 'Unidade Curricular : Métodos Estatísticos'
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 
@@ -29,6 +29,14 @@ amplitude <- function(x)
   min <- min(x)
   nclass <- sturges(x)
   (max -min) / nclass
+}
+
+assimetria <- function(x)
+{
+  n <-length(x)
+  s <- sd(x)
+  m <- mean(x)
+  1/n * sum((x - m)^3/s^3)
 }
 ```
 
@@ -108,11 +116,15 @@ cat("\nVariância\n")
 s <- var(hour$temp)
 s
 
+cat("\nAssimetria\n")
+hour.temperatura.assimetria <- assimetria(hour$temp)
+hour.temperatura.assimetria
+
 # histograma
 hist(hour$temp, main="Histograma temp", xlab="temp",  ylab="Count temperature", nclass=hour.temp.sturges.nclass)
 ```
 
-Através do histograma, conseguimos verificar graficamente que a variável parece ter uma distribuição Normal, conseguindo comprovar de acordo com a proposição de que a variância é o quadrado do valor esperado.
+Através do histograma, conseguimos verificar graficamente que a variável parece ter uma distribuição Normal, conseguindo comprovar de acordo com a proposição de que a variância é o quadrado do valor esperado. Tem um comportamento simétrico.
 
 Média = 0.4969872
 Variância = 0.03707786
@@ -131,9 +143,9 @@ H1 − Os dados não provêm da população com a distribuição Normal.
 var(hour$temp)
 mean(hour$temp)
 chisq.test(table(hour$temp))
-qchisq(.10, df=5)
+qchisq(.90,  df=49)
 ``` 
-
+Dobs = 8694.5 e RC=[62.03754,+∞]
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
 Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
@@ -142,8 +154,10 @@ Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se qu
 var(hour.day$temp)
 mean(hour.day$temp)
 chisq.test(table(hour.day$temp))
-qchisq(.10, df=49)
+qchisq(.90,  df=49)
 ```
+
+Dobs = 3883.3 e RC=[62.03754,+∞]
 
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
@@ -154,8 +168,11 @@ Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se qu
 var(hour.night$temp)
 mean(hour.night$temp)
 chisq.test(table(hour.night$temp))
-qchisq(.10, df=45)
+qchisq(.90, df=45)
 ```
+
+Dobs = 4392.1 e RC=[57.5053,+∞]
+
 No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
 
 Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
@@ -191,7 +208,11 @@ Os resíduos seguem uma distribuição normal porque é simétrica relativamente
 ```{r, eval = TRUE}
 hist(residuos, main="Residuos", xlab="Percentagem", ylab="Count Residuos")
 ``` 
+### **Hipóteses** {#hipoteses}
 
+H0 − Os dados provêm da população com a distribuição Normal no teste de ajustamtamento de Kolmogorov-Smirnov.
+
+H1 − Os dados não provêm da população com a distribuição Normal no teste de ajustamtamento de Kolmogorov-Smirnov.
 
 ### **Testes de Ajustamento** {#testes-ajustamento}
 
@@ -272,9 +293,15 @@ hourdaynight$parameter # graus de liberdade
 cat("\nP Value\n")
 hourdaynight$p.value   # valor-p
 
+alpha <- 0.01
+
+cat("\nRegião Critica\n")
+qchisq(1-alpha,hourdaynight$parameter)
+
 #
 #qchisq(.01, df=42532)
 ``` 
+Dobs = 168.6791 e RC=[21.66599,+∞]
 
 No nível de significância de 1% tem como 1.162626e-31 < 0.01 então rejeita-se a hipótese nula (H0).
 
@@ -305,7 +332,13 @@ hourday$parameter # graus de liberdade
 cat("\nP Value\n")
 hourday$p.value   # valor-p
 
+alpha <- 0.01
+
+cat("\nRegião Critica\n")
+qchisq(1-alpha,hourday$parameter)
+
 ``` 
+Dobs = 94.36922 e RC=[21.66599,+∞]
 
 No nível de significância de 1% tem como 2.154533e-16 < 0.01 então rejeita-se a hipótese nula (H0).
 
@@ -335,7 +368,13 @@ cat("\nGraus de liberdade\n")
 hournight$parameter # graus de liberdade
 cat("\nP Value\n")
 hournight$p.value   # valor-p
+
+alpha <- 0.01
+
+cat("\nRegião Critica\n")
+qchisq(1-alpha,hournight$parameter)
 ``` 
+Dobs = 85.13561 e RC=[21.66599,+∞]
 
 No nível de significância de 1% tem como 1.532833e-14 < 0.01 então rejeita-se a hipótese nula (H0).
 
