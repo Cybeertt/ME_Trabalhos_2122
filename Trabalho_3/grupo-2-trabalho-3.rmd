@@ -150,33 +150,6 @@ No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a h
 
 Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
 
-```{r, eval = TRUE}
-var(hour.day$temp)
-mean(hour.day$temp)
-chisq.test(table(hour.day$temp))
-qchisq(.90,  df=49)
-```
-
-Dobs = 3883.3 e RC=[62.03754,+∞]
-
-No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
-
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma  distribuição Normal.
-
-```{r, eval = TRUE}
-#df: graus de liberdade
-var(hour.night$temp)
-mean(hour.night$temp)
-chisq.test(table(hour.night$temp))
-qchisq(.90, df=45)
-```
-
-Dobs = 4392.1 e RC=[57.5053,+∞]
-
-No nível de significância de 10% tem como 2.2e-16 < 0.10 então rejeita-se a hipótese nula (H0).
-
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 10%,  conclui-se que os tempos de falha não seguem uma distribuição Normal.
-
 
 ### **Regressão Linear Simples** {#regressao}
 
@@ -219,16 +192,6 @@ H1 − Os dados não provêm da população com a distribuição Normal no teste
 Realização dos testes de ajustamento de Kolmogorov-Smirnov, assim como, através da região crítica e do valor-p
 
 ```{r, eval = TRUE}
-ks.test(hour$temp, hour$cnt)
-rc =1.36  / sqrt(length(residuos))
-rc
-``` 
-Dobs = 0.99994 e RC=[0.01031636,+∞]
-Como 0.99994 pertence à Região Critíca então rejeita se a hipótese H0.
-
-Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
-
-```{r, eval = TRUE}
 
 ks.test(hour.day$temp, hour.day$cnt)
 rc =1.36  / sqrt(length(residuos2))
@@ -240,109 +203,6 @@ Como 0.99989 pertence à Região Critíca então rejeita se a hipótese H0.
 Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
 
 Como Valor-P é um valor exato, ao qual consideramos fiável, concluindo que a H0 é rejeitada.
-
-```{r, eval = TRUE}
-ks.test(hour.night$temp, hour.night$cnt)
-rc =1.36  / sqrt(length(residuos3))
-rc
-```
-Dobs = 1 e RC=[0.01463042,+∞]
-Como 1 pertence à Região Critíca então rejeita a hipótese H0.
-Como valor-p < 2.2e-16 < 0.05 = α então rejeita se a hipotese nula.
-
-
-### **Hipóteses** {#hipoteses}
-
-H0 − As variáveis são independentes
-
-H1 − As variáveis não são independentes
-
-```{r, eval = TRUE}
-
-dim(hour)
-#(tabela.1 <- table(hour))
-#dimnames(table(hour)) = list(yr=c("Não","Sim"),
-#                          workingday=c("Não","Sim"))
-#tabela.1
-
-# formula de sturges
-cat("\nNúmero de classes\n")
-hour.atemp.sturges.nclass <- sturges(hour$atemp)
-hour.atemp.sturges.nclass
-
-# amplitude da classe
-cat("\nAmplitude da classe\n")
-hour.atemp.sturges.amplitude <- amplitude(hour$atemp)
-hour.atemp.sturges.amplitude
-
-
-(tabela.1 <- table(hour$season,hour$weathersit))
-dimnames(tabela.1) = list(season=c("Inverno","Primavera", "Verão", "Outono"),
-                        weathersit=c("Céu Limpo","Nublado", "Aguaceiros","Tempestade"))
-
-hourdaynight <- chisq.test(tabela.1)
-cat("\n Tabela de contigência dos dados observados\n")
-hourdaynight$observed  # Oi = frequências Observadas
-
-cat("\n Tabela de contigência dos dados esperados\n")
-hourdaynight$expected 
-cat("\nQobs\n")
-hourdaynight$statistic
-cat("Graus de liberdade")
-hourdaynight$parameter # graus de liberdade
-cat("\nP Value\n")
-hourdaynight$p.value   # valor-p
-
-alpha <- 0.01
-
-cat("\nRegião Critica\n")
-qchisq(1-alpha,hourdaynight$parameter)
-
-#
-#qchisq(.01, df=42532)
-``` 
-Dobs = 168.6791 e RC=[21.66599,+∞]
-
-No nível de significância de 1% tem como 1.162626e-31 < 0.01 então rejeita-se a hipótese nula (H0).
-
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
-
-
-### **Hipóteses** {#hipoteses}
-
-H0 − As variáveis são independentes
-
-H1 − As variáveis não são independentes
-
-```{r, eval = TRUE}
-(tabela.2 <- table(hour.day$season,hour.day$weathersit))
-dimnames(tabela.2) = list(season=c("Inverno","Primavera", "Verão", "Outono"),
-                        weathersit=c("Céu Limpo","Nublado", "Aguaceiros","Tempestade"))
-
-hourday <- chisq.test(tabela.2)
-cat("\n Tabela de contigência dos dados observados\n")
-hourday$observed  # Oi = frequências Observadas
-
-cat("\n Tabela de contigência dos dados esperados\n")
-hourday$expected 
-cat("\nQobs\n")
-hourday$statistic
-cat("\nGraus de liberdade\n")
-hourday$parameter # graus de liberdade
-cat("\nP Value\n")
-hourday$p.value   # valor-p
-
-alpha <- 0.01
-
-cat("\nRegião Critica\n")
-qchisq(1-alpha,hourday$parameter)
-
-``` 
-Dobs = 94.36922 e RC=[21.66599,+∞]
-
-No nível de significância de 1% tem como 2.154533e-16 < 0.01 então rejeita-se a hipótese nula (H0).
-
-Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
 
 
 ### **Hipóteses** {#hipoteses}
@@ -379,24 +239,3 @@ Dobs = 85.13561 e RC=[21.66599,+∞]
 No nível de significância de 1% tem como 1.532833e-14 < 0.01 então rejeita-se a hipótese nula (H0).
 
 Com  base  na  amostra  e  ao  nível  de  signifiância  de 1%,  conclui-se que os tempos de falha não seguem uma existencia associada entre as variáveis selecionadas.
-
-******
-
-## **3. Referências** {#ref}
-
-### 3.1 Documentação Não Eletrónia {#ref-offline}
-
-  1. O'Reilly, Hadley Wickham & Garrett Glomund - R for Data Science.(2021)
-
-### 3.2 Documentação Eletrónica {#ref-online}
-
-  1. MOODLE IPS, UNIDADE CURRICULAR MÉTODOS ESTATÍSTICOS - Capítulo 2 - Regressão Linear Simples. [Consulta 2021-??-04]. Disponível na Internet: https://moodle.ips.pt/2021/mod/resource/view.php?id=81565
-  
-  2. MOODLE IPS, UNIDADE CURRICULAR MÉTODOS ESTATÍSTICOS - Sebenta - Regressão Linear Simples (capítulo 2). [Consulta 2021-??-04]. Disponível na Internet: https://moodle.ips.pt/2021/mod/resource/view.php?id=102474
-  
-  3. MOODLE IPS, UNIDADE CURRICULAR MÉTODOS ESTATÍSTICOS - Ficha de Trabalho 4 - Regressão Linear Simples. [Consulta 2021-??-04]. Disponível na Internet: https://moodle.ips.pt/2021/mod/resource/view.php?id=98992
-  
-  4. MOODLE IPS, UNIDADE CURRICULAR MÉTODOS ESTATÍSTICOS - Ficha de Trabalho 5 - Regressão Linear Simples. [Consulta 2021-??-04]. Disponível na Internet: https://moodle.ips.pt/2021/mod/resource/view.php?id=108002
-  
-  5. Learn by Marketing - Linear regression in R. [Consulta 2021-6-05]. Disponível na Internet: http://www.learnbymarketing.com/tutorials/linear-regression-in-r/
-  
